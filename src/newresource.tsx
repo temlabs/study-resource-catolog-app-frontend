@@ -41,11 +41,11 @@ export default function Newresource(props: ResourcePost): JSX.Element {
   };
 
   const handleAddTag = (value: string) => {
-      setSelectedTags((prevSelectedTags) => ({
-        ...prevSelectedTags,
-        value,
-      }));
-  }
+    setSelectedTags((prevSelectedTags) => ({
+      ...prevSelectedTags,
+      value,
+    }));
+  };
 
   const handleChange = (event: { target: { name: string; value: string } }) => {
     const { name, value } = event.target;
@@ -112,11 +112,11 @@ export default function Newresource(props: ResourcePost): JSX.Element {
         <br></br>
       </div>
       <div className="rightFreeTextContainer">
-        <textarea 
-            value={resource.description} 
-            id="freetextbox"
-            placeholder="Description:"
-            onChange={handleChange}
+        <textarea
+          value={resource.description}
+          id="freetextbox"
+          placeholder="Description:"
+          onChange={handleChange}
         />
       </div>
       <div className="leftContainer">
@@ -138,28 +138,48 @@ export default function Newresource(props: ResourcePost): JSX.Element {
         <br></br>
 
         <div className="tagdown" onClick={handleGetTags}>
-            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                 Tag selector
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Tag selector
           </button>
-            <ul className="dropdown-menu btn btn-info" aria-labelledby="dropdownMenuButton1">
-                {tags.map((tag) => { return (<li className="dropdown-item" onClick={handleAddTag} key={tag.tag_name}>{tag.tag_name}</li>) })}
-             </ul>
-        </div> 
-        
+          <ul
+            className="dropdown-menu btn btn-info"
+            aria-labelledby="dropdownMenuButton1"
+          >
+            {tags.map((tag) => {
+              return (
+                <li
+                  className="dropdown-item"
+                  onClick={handleAddTag}
+                  key={tag.tag_name}
+                >
+                  {tag.tag_name}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
         <br></br>
         <p>Tags:{selectedTags}</p>
       </div>
       <div className="rightFreeTextContainer">
-        <textarea             
-            value={resource.recommendation_reason} 
-            id="freetextbox"
-            placeholder="Recommendation Reason:"
-            onChange={handleChange}
-            />
+        <textarea
+          value={resource.recommendation_reason}
+          id="freetextbox"
+          placeholder="Recommendation Reason:"
+          onChange={handleChange}
+        />
       </div>
-      <button type="submit" onClick={handleClick}> Submit your resource! </button>
+      <button type="submit" onClick={handleClick}>
+        {" "}
+        Submit your resource!{" "}
+      </button>
     </div>
   );
 }
-
-
