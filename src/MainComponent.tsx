@@ -1,3 +1,3 @@
-export default function MainComponent():JSX.Element{
-    return (<></>)
+export default function MainComponent(): JSX.Element {
+  return <></>;
 }

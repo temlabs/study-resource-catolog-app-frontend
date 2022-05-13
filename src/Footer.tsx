@@ -1,6 +1,3 @@
-export default function Footer():JSX.Element{
-    return (
-    <></>
-    )
-
+export default function Footer(): JSX.Element {
+  return <></>;
 }
