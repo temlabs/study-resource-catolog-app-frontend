@@ -32,12 +32,20 @@ export default function Newresource(props: ResourcePost): JSX.Element {
     recommendation_reason: "",
   });
   const [tags, setTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const handleGetTags = () => {
     fetch("https://study-resource-catalog-backend.herokuapp.com/tags")
       .then((response) => response.json())
       .then((jsonBody) => setTags(jsonBody));
   };
+
+  const handleAddTag = (value: string) => {
+      setSelectedTags((prevSelectedTags) => ({
+        ...prevSelectedTags,
+        value,
+      }));
+  }
 
   const handleChange = (event: { target: { name: string; value: string } }) => {
     const { name, value } = event.target;
@@ -112,7 +120,7 @@ export default function Newresource(props: ResourcePost): JSX.Element {
         />
       </div>
       <div className="leftContainer">
-        <select>
+        <select value={resource.recommendation_nature} onChange={handleChange}>
           <option value="I recommend this resource after having used it">
             Recommended
           </option>
@@ -128,7 +136,16 @@ export default function Newresource(props: ResourcePost): JSX.Element {
           Content Type:
         </input>
         <br></br>
-        <input type="text">TAGS</input> <br></br>
+        <div className="tagdown">
+            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+//                 Tag selector
+//          </button>
+            <ul className="dropdown-menu btn btn-info" aria-labelledby="dropdownMenuButton1">
+                {tags.map((tag) => { return (<li className="dropdown-item" onClick={() => props.setSelectedTags(tag)} key={tag.tag_name}>{tag.tag_name}</li>) })}
+             </ul>
+        </div> 
+        <br></br>
+        <p>Tags:{selectedTags}</p>
       </div>
       <div className="rightFreeTextContainer">
         <textarea             
@@ -142,3 +159,20 @@ export default function Newresource(props: ResourcePost): JSX.Element {
     </div>
   );
 }
+
+
+
+// return (
+//     <>
+//         <h2>Study Buddy</h2>
+        
+//         {props.user.user_id === 0 ? (<p>Please select User</p>):(<p>Current User is {props.user.user_name}</p>)}
+//         <div className="dropdown">
+//             <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+//                 User Dropdown List
+//             </button>
+//             <ul className="dropdown-menu btn btn-info" aria-labelledby="dropdownMenuButton1">
+//                 {allUsers.map((user) => { return (<li className="dropdown-item" onClick={() => props.setUser(user)} key={user.user_id}>{user.user_name}</li>) })}
+//             </ul>
+//         </div>
+//     </>
