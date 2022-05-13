@@ -2,13 +2,15 @@ import FilterBar from "./FilterBar";
 
 function App(): JSX.Element {
   return (
-    <FilterBar
+    <>
+      {/* <FilterBar
       unfliteredResourceList={}
       setResourceList={}
       unfilteredStudyList={}
       setStudyList={}
       allTags={}
-    />
+    /> */}
+    </>
   );
 }
 
