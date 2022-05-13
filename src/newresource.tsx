@@ -31,6 +31,13 @@ export default function Newresource(props: ResourcePost): JSX.Element {
     recommendation_nature: "",
     recommendation_reason: "",
   });
+  const [tags, setTags] = useState([]);
+
+  const handleGetTags = () => {
+    fetch("https://study-resource-catalog-backend.herokuapp.com/tags")
+      .then((response) => response.json())
+      .then((jsonBody) => setTags(jsonBody));
+  };
 
   const handleChange = (event: { target: { name: string; value: string } }) => {
     const { name, value } = event.target;
@@ -69,7 +76,7 @@ export default function Newresource(props: ResourcePost): JSX.Element {
           type="text"
           placeholder="Resource Name:"
           onChange={handleChange}
-        />{" "}
+        />
         <br></br>
         <input
           value={resource.author_name}
@@ -77,7 +84,7 @@ export default function Newresource(props: ResourcePost): JSX.Element {
           type="text"
           placeholder="Author Name:"
           onChange={handleChange}
-        />{" "}
+        />
         <br></br>
         <input
           value={resource.url}
@@ -97,7 +104,12 @@ export default function Newresource(props: ResourcePost): JSX.Element {
         <br></br>
       </div>
       <div className="rightFreeTextContainer">
-        <textarea id="freetextbox">Description:</textarea>
+        <textarea 
+            value={resource.description} 
+            id="freetextbox"
+            placeholder="Description:"
+            onChange={handleChange}
+        />
       </div>
       <div className="leftContainer">
         <select>
@@ -119,7 +131,12 @@ export default function Newresource(props: ResourcePost): JSX.Element {
         <input type="text">TAGS</input> <br></br>
       </div>
       <div className="rightFreeTextContainer">
-        <textarea id="freetextbox">Recommendation Reason:</textarea>
+        <textarea             
+            value={resource.recommendation_reason} 
+            id="freetextbox"
+            placeholder="Recommendation Reason:"
+            onChange={handleChange}
+            />
       </div>
       <button type="submit" onClick={handleClick}> Submit your resource! </button>
     </div>
