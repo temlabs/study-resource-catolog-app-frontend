@@ -3,7 +3,7 @@
 
 // onClick handler to package up object and post resource
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface ResourcePost {
   user_id: number;
@@ -32,7 +32,7 @@ export default function Newresource(props: ResourcePost): JSX.Element {
     recommendation_reason: "",
   });
   const [tags, setTags] = useState([]);
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState<tags[]>([]);
 
   const handleGetTags = () => {
     fetch("https://study-resource-catalog-backend.herokuapp.com/tags")
@@ -136,14 +136,16 @@ export default function Newresource(props: ResourcePost): JSX.Element {
           Content Type:
         </input>
         <br></br>
-        <div className="tagdown">
+
+        <div className="tagdown" onClick={handleGetTags}>
             <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-//                 Tag selector
-//          </button>
+                 Tag selector
+          </button>
             <ul className="dropdown-menu btn btn-info" aria-labelledby="dropdownMenuButton1">
-                {tags.map((tag) => { return (<li className="dropdown-item" onClick={() => props.setSelectedTags(tag)} key={tag.tag_name}>{tag.tag_name}</li>) })}
+                {tags.map((tag) => { return (<li className="dropdown-item" onClick={handleAddTag} key={tag.tag_name}>{tag.tag_name}</li>) })}
              </ul>
         </div> 
+        
         <br></br>
         <p>Tags:{selectedTags}</p>
       </div>
@@ -161,18 +163,3 @@ export default function Newresource(props: ResourcePost): JSX.Element {
 }
 
 
-
-// return (
-//     <>
-//         <h2>Study Buddy</h2>
-        
-//         {props.user.user_id === 0 ? (<p>Please select User</p>):(<p>Current User is {props.user.user_name}</p>)}
-//         <div className="dropdown">
-//             <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-//                 User Dropdown List
-//             </button>
-//             <ul className="dropdown-menu btn btn-info" aria-labelledby="dropdownMenuButton1">
-//                 {allUsers.map((user) => { return (<li className="dropdown-item" onClick={() => props.setUser(user)} key={user.user_id}>{user.user_name}</li>) })}
-//             </ul>
-//         </div>
-//     </>
