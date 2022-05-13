@@ -13,7 +13,7 @@ import Footer from "./Footer"
 
 
 export default function App(): JSX.Element {
-  const [user, setUser] = useState<UserData>({user_id: 1, user_name: 'roshni', is_faculty: false})
+  const [user, setUser] = useState<UserData>({user_id:0, user_name:'', is_faculty:false})
   
   return (
   <>
