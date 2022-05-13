@@ -1,4 +1,4 @@
-import FilterBar from "./FilterBar";
+//import FilterBar from "./FilterBar";
 
 function App(): JSX.Element {
   return (
