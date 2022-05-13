@@ -32,7 +32,7 @@ export default function Newresource(props: ResourcePost): JSX.Element {
     recommendation_reason: "",
   });
   const [tags, setTags] = useState([]);
-  const [selectedTags, setSelectedTags] = useState<tags[]>([]);
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const handleGetTags = () => {
     fetch("https://study-resource-catalog-backend.herokuapp.com/tags")
@@ -154,7 +154,7 @@ export default function Newresource(props: ResourcePost): JSX.Element {
             {tags.map((tag) => {
               return (
                 <li
-                  className="dropdown-item"
+                  className="dropdown-tags"
                   onClick={handleAddTag}
                   key={tag.tag_name}
                 >
