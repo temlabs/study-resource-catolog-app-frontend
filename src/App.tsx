@@ -1,7 +1,15 @@
-import { greet } from "./utils/greet";
+import FilterBar from "./FilterBar";
 
 function App(): JSX.Element {
-  return <h1>{greet("World")}</h1>;
+  return (
+    <FilterBar
+      unfliteredResourceList={}
+      setResourceList={}
+      unfilteredStudyList={}
+      setStudyList={}
+      allTags={}
+    />
+  );
 }
 
 export default App;
