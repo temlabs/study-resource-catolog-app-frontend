@@ -31,6 +31,7 @@ export default function Newresource(props: ResourcePost): JSX.Element {
     recommendation_nature: "",
     recommendation_reason: "",
   });
+
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
 
@@ -155,10 +156,10 @@ export default function Newresource(props: ResourcePost): JSX.Element {
               return (
                 <li
                   className="dropdown-tags"
-                  onClick={handleAddTag}
-                  key={tag.tag_name}
+                  onClick={(e) => handleAddTag(tag["tag_name"])}
+                  key={tag["tag_name"]}
                 >
-                  {tag.tag_name}
+                  {tag["tag_name"]}
                 </li>
               );
             })}
