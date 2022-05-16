@@ -3,7 +3,9 @@
 
 // onClick handler to package up object and post resource
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { baseUrl } from "./baseURL";
+import { UserProps } from "./MainComponent"
 
 interface ResourcePost {
   user_id: number;
@@ -18,9 +20,11 @@ interface ResourcePost {
   recommendation_reason: string;
 }
 
-export default function Newresource(props: ResourcePost): JSX.Element {
-  const [resource, setResource] = useState({
-    user_id: 0,
+
+
+export default function Newresource(props: UserProps): JSX.Element {
+  const [resource, setResource] = useState<ResourcePost>({
+    user_id: props.user_id,
     resource_name: "",
     author_name: "",
     url: "",
@@ -32,11 +36,15 @@ export default function Newresource(props: ResourcePost): JSX.Element {
     recommendation_reason: "",
   });
 
+  useEffect(() => {
+    setResource(Object.assign(resource, { user_id: props.user_id }))
+  }, [props.user_id])
+
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
 
   const handleGetTags = () => {
-    fetch("https://study-resource-catalog-backend.herokuapp.com/tags")
+    fetch(`${baseUrl}/tags`)
       .then((response) => response.json())
       .then((jsonBody) => setTags(jsonBody));
   };
@@ -57,6 +65,7 @@ export default function Newresource(props: ResourcePost): JSX.Element {
   };
 
   const handleClick = () => {
+
     const requestOptions = {
       method: "POST",
       headers: { "Content-type": "application/json" },
@@ -74,6 +83,8 @@ export default function Newresource(props: ResourcePost): JSX.Element {
         console.log("error", error);
       });
   };
+
+  console.log(props.user_name, props.user_id)
 
   return (
     <div>
@@ -133,9 +144,9 @@ export default function Newresource(props: ResourcePost): JSX.Element {
           </option>
         </select>
         <br></br>
-        <input type="text" onChange={handleChange}>
-          Content Type:
-        </input>
+        <input type="text" onChange={handleChange} />
+        {/* Content Type: */}
+
         <br></br>
         <div className="tagdown" onClick={handleGetTags}>
           <button

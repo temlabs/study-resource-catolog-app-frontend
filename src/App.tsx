@@ -20,7 +20,7 @@ export default function App(): JSX.Element {
   return (
     <>
       <Header user={user} setUser={setUser} />
-      <MainComponent />
+      <MainComponent user_id={user.user_id} user_name={user.user_name} />
       <Footer />
     </>
   );
