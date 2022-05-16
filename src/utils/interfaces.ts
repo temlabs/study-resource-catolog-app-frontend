@@ -42,7 +42,7 @@ export interface ResourcePost {
 }
 
 export interface FilterBarProps {
-    unfliteredResourceList: ResourceProp[];
+    unfilteredResourceList: ResourceProp[];
     setResourceList: (list: ResourceProp[]) => void;
     unfilteredStudyList: ResourceProp[];
     setStudyList: (list: ResourceProp[]) => void;
