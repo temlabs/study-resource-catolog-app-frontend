@@ -3,15 +3,11 @@ import { useEffect, useState } from "react";
 import { baseUrl } from "./baseURL";
 import FilterBar from "./FilterBar";
 import Newresource from "./newresource";
-
-import ResourceCard from "./ResourceCard";
-import { UserProps } from "./utils/interfaces";
-
-export default function MainComponent(props: UserProps): JSX.Element {
-  // fetch tags and have a tags state string[] that can be passed into new resource and filter bar
-
-      
 import { UserProps, ContentType, Tag, ResourceProp } from "./utils/interfaces";
+import ResourceCard from "./ResourceCard";
+
+
+
 
 export default function MainComponent(props: UserProps): JSX.Element {
   const [studyListShowing, setStudyListShowing] = useState<boolean>(false);
@@ -19,43 +15,44 @@ export default function MainComponent(props: UserProps): JSX.Element {
   const [allTags, setAllTags] = useState<string[]>([]);
   const [studyList, setStudyList] = useState<ResourceProp[]>([]);
   const [allResourcesList, setAllResourcesList] = useState<ResourceProp[]>([]);
+  const [displayList, setDisplayList] = useState<ResourceProp[]>([])
 
   // fetch the necessary data once only
   useEffect(() => {
     const getContentTypes = async () => {
-      const contentTypesData: ContentType[] = await axios.get(
+      const contentTypesData = await axios.get(
         `${baseUrl}/content-type`
       );
-      const contentTypeNames = contentTypesData.map((ct) => ct.content_name);
+      const contentTypeNames = (contentTypesData.data as ContentType[]).map((ct) => ct.content_name);
       setContentTypes(contentTypeNames);
     };
 
     const getAllTags = async () => {
-      const contentTypesData: Tag[] = await axios.get(`${baseUrl}/tags`);
-      const allTagNames = contentTypesData.map((tag) => tag.tag_name);
+      const contentTypesData = await axios.get(`${baseUrl}/tags`);
+      const allTagNames = (contentTypesData.data as Tag[]).map((tag) => tag.tag_name);
       setAllTags(allTagNames);
     };
 
     const getResourceList = async () => {
-      const resourceListData: ResourceProp[] = await axios.get(
+      const resourceListData = await axios.get(
         `${baseUrl}/resources`
       );
-      setAllResourcesList(resourceListData);
+      setAllResourcesList(resourceListData.data as ResourceProp[]);
     };
 
     getContentTypes();
     getAllTags();
     getResourceList();
-  }, []);
+  }, [props.user_id]);
 
   // fetch study list whenever user id is changed
   useEffect(() => {
     const getStudyList = async () => {
       if (props.user_id !== 0) {
-        const studyListData: ResourceProp[] = await axios.get(
+        const studyListData = await axios.get(
           `${baseUrl}/study-list/${props.user_id}`
         );
-        setStudyList(studyListData);
+        setStudyList(studyListData.data as ResourceProp[]);
       }
     };
 
@@ -63,7 +60,10 @@ export default function MainComponent(props: UserProps): JSX.Element {
   }, [props.user_id]);
 
   // RENDER CARDS FOR THE LIST BELOW
-  // const listToRender = studyListShowing ? studyList : allResourcesList;
+  useEffect(() => {
+    const listToRender: ResourceProp[] = studyListShowing ? studyList : allResourcesList;
+
+  }, [props.user_id, allResourcesList])
 
   return (
     <>
@@ -81,8 +81,16 @@ export default function MainComponent(props: UserProps): JSX.Element {
         allContentTypes={contentTypes}
         studyListShowing={studyListShowing}
         setStudyListShowing={setStudyListShowing}
+        setDisplayList={setDisplayList}
       />
-      <ResourceCard />
+      {displayList.map((resource, ix) =>
+        <ResourceCard
+          key={ix}
+          resource={resource}
+          user={props}
+        />
+
+      )}
     </>
   );
 }
