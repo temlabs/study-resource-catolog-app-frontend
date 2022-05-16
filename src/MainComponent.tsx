@@ -1,4 +1,4 @@
-import FilterBar from "./FilterBar";
+// import FilterBar from "./FilterBar";
 import Newresource from "./newresource";
 import { UserProps } from "./utils/interfaces";
 
@@ -8,14 +8,14 @@ export default function MainComponent(props: UserProps): JSX.Element {
   return (
     <>
       <Newresource user_id={props.user_id} user_name={props.user_name} tags={[]} />
-      <FilterBar
-        unfilteredResourceList={ }
-        setResourceList={ }
-        unfilteredStudyList={ }
-        setStudyList={ }
-        allTags={ }
-        allContentTypes={ }
-      />
+      {/* <FilterBar */}
+        // unfilteredResourceList={ }
+        // setResourceList={ }
+        // unfilteredStudyList={ }
+        // setStudyList={ }
+        // allTags={ }
+        // allContentTypes={ }
+      {/* /> */}
     </>
   );
 }

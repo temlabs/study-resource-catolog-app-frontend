@@ -111,17 +111,14 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
         />
       </div>
       <div className="leftContainer">
-        <select value={resource.recommendation_nature} onChange={handleChange}>
-          <option value="I recommend this resource after having used it">
-            Recommended
-          </option>
-          <option value="I do not recommend this resource, having used it">
-            Not Recommended
-          </option>
-          <option value="I haven't used this resource but it looks promising">
-            Haven't used yet
-          </option>
-        </select>
+        <label htmlFor="nature">Recommendation nature:</label><br></br>
+        <select id="nature" value={resource.recommendation_nature} onChange={handleChange}>
+          <option value="">Please choose a nature type:</option>
+          <option value="I recommend this resource after having used it">I recommend this resource after having used it</option>
+          <option value="I do not recommend this resource, having used it">I do not recommend this resource, having used it</option>
+          <option value="I haven't used this resource but it looks promising">I haven't used this resource but it looks promising</option>
+        </select><br></br>
+        <button>{resource.recommendation_nature}</button>
         <br></br>
         <input type="text" onChange={handleChange} />
         {/* Content Type: */}
@@ -166,8 +163,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
         />
       </div>
       <button type="submit" onClick={handleClick}>
-        {" "}
-        Submit your resource!{" "}
+        Submit your resource!
       </button>
     </div>
   );
