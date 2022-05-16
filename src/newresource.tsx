@@ -1,14 +1,6 @@
-// to add below line to main.tsx
-// import Newresource from "./newresource";
-
-// onClick handler to package up object and post resource
-
 import { useEffect, useState } from "react";
 import { baseUrl } from "./baseURL";
 import { NewResourceProps, ResourcePost } from "./utils/interfaces"
-
-
-
 
 export default function Newresource(props: NewResourceProps): JSX.Element {
   const [resource, setResource] = useState<ResourcePost>({
@@ -26,7 +18,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
 
   useEffect(() => {
     setResource(Object.assign(resource, { user_id: props.user_id }))
-  }, [props.user_id])
+  }, [props.user_id, resource]) 
 
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -53,7 +45,6 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
   };
 
   const handleClick = () => {
-
     const requestOptions = {
       method: "POST",
       headers: { "Content-type": "application/json" },
@@ -114,7 +105,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
       <div className="rightFreeTextContainer">
         <textarea
           value={resource.description}
-          id="freetextbox"
+          name="description"
           placeholder="Description:"
           onChange={handleChange}
         />
@@ -169,7 +160,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
       <div className="rightFreeTextContainer">
         <textarea
           value={resource.recommendation_reason}
-          id="freetextbox"
+          name="recommendation_reason"
           placeholder="Recommendation Reason:"
           onChange={handleChange}
         />
