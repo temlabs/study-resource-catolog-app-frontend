@@ -137,7 +137,6 @@ export default function Newresource(props: ResourcePost): JSX.Element {
           Content Type:
         </input>
         <br></br>
-
         <div className="tagdown" onClick={handleGetTags}>
           <button
             className="btn btn-secondary dropdown-toggle"
@@ -165,7 +164,6 @@ export default function Newresource(props: ResourcePost): JSX.Element {
             })}
           </ul>
         </div>
-
         <br></br>
         <p>Tags:{selectedTags}</p>
       </div>
