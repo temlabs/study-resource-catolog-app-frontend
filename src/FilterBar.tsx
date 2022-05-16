@@ -26,35 +26,45 @@ export default function FilterBar({
   studyListShowing,
   setStudyListShowing,
 
+
+export default function FilterBar({
+    unfilteredResourceList,
+    setResourceList,
+    unfilteredStudyList,
+    setStudyList,
+    allTags,
+    allContentTypes,
 }: FilterBarProps): JSX.Element {
   const [searchInputText, setSearchInputText] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedContentType, setSelectedContentType] = useState<string>("");
 
-  function addOrRemoveTag(tagName: string, tagElement: HTMLElement) {
-    const isSelected: boolean = selectedTags.includes(tagName);
-    if (isSelected) {
-      const newSelectedTags = selectedTags.filter((t) => t !== tagName); // remove the tag from the selected list
-      tagElement.classList.add("unselected");
-      setSelectedTags(newSelectedTags);
-    } else {
-      // add it to the selected list
-      const newSelectedTags: string[] = [...selectedTags];
-      newSelectedTags.push(tagName);
-      tagElement.classList.remove("unselected");
-      setSelectedTags(newSelectedTags);
-    }
+
+    function addOrRemoveTag(tagName: string, tagElement: HTMLElement) {
+        const isSelected: boolean = selectedTags.includes(tagName);
+        if (isSelected) {
+            const newSelectedTags = selectedTags.filter((t) => t !== tagName); // remove the tag from the selected list
+            tagElement.classList.add("unselected");
+            setSelectedTags(newSelectedTags);
+        } else {
+            // add it to the selected list
+            const newSelectedTags: string[] = [...selectedTags];
+            newSelectedTags.push(tagName);
+            tagElement.classList.remove("unselected");
+            setSelectedTags(newSelectedTags);
+        }
     filterListOfResources(unfliteredResourceList, setResourceList);
     filterListOfResources(unfilteredStudyList, setStudyList);
   }
 
-  function setSearchInputTextAndFilter(
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void {
-    setSearchInputText(e.target.value);
-    filterListOfResources(unfliteredResourceList, setResourceList);
-    filterListOfResources(unfilteredStudyList, setStudyList);
-  }
+    function setSearchInputTextAndFilter(
+        e: React.ChangeEvent<HTMLInputElement>
+    ): void {
+        setSearchInputText(e.target.value);
+        filterListOfResources(unfilteredResourceList, setResourceList);
+        filterListOfResources(unfilteredStudyList, setStudyList);
+    }
+
 
 
   function setContentTypeAndFilter(newSelectedContentType: string) {
