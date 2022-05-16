@@ -12,7 +12,7 @@ export default function MainComponent(props: UserProps): JSX.Element {
     <>
       <Newresource user_id={props.user_id} user_name={props.user_name} tags={ } />
       <FilterBar
-        unfliteredResourceList={ }
+        unfilteredResourceList={ }
         setResourceList={ }
         unfilteredStudyList={ }
         setStudyList={ }

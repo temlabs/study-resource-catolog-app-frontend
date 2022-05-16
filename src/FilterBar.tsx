@@ -18,7 +18,7 @@ import { FilterBarProps, ResourceProp } from "./utils/interfaces"
 
 
 export default function FilterBar({
-    unfliteredResourceList,
+    unfilteredResourceList,
     setResourceList,
     unfilteredStudyList,
     setStudyList,
@@ -42,7 +42,7 @@ export default function FilterBar({
             tagElement.classList.remove("unselected");
             setSelectedTags(newSelectedTags);
         }
-        filterListOfResources(unfliteredResourceList, setResourceList);
+        filterListOfResources(unfilteredResourceList, setResourceList);
         filterListOfResources(unfilteredStudyList, setStudyList);
     }
 
@@ -50,13 +50,13 @@ export default function FilterBar({
         e: React.ChangeEvent<HTMLInputElement>
     ): void {
         setSearchInputText(e.target.value);
-        filterListOfResources(unfliteredResourceList, setResourceList);
+        filterListOfResources(unfilteredResourceList, setResourceList);
         filterListOfResources(unfilteredStudyList, setStudyList);
     }
 
     function setContentTypeAndFilter(e: React.ChangeEvent<HTMLSelectElement>) {
         setSelectedContentType(e.target.value);
-        filterListOfResources(unfliteredResourceList, setResourceList);
+        filterListOfResources(unfilteredResourceList, setResourceList);
         filterListOfResources(unfilteredStudyList, setStudyList);
     }
 
