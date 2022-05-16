@@ -3,6 +3,14 @@ import { useEffect, useState } from "react";
 import { baseUrl } from "./baseURL";
 import FilterBar from "./FilterBar";
 import Newresource from "./newresource";
+
+import ResourceCard from "./ResourceCard";
+import { UserProps } from "./utils/interfaces";
+
+export default function MainComponent(props: UserProps): JSX.Element {
+  // fetch tags and have a tags state string[] that can be passed into new resource and filter bar
+
+      
 import { UserProps, ContentType, Tag, ResourceProp } from "./utils/interfaces";
 
 export default function MainComponent(props: UserProps): JSX.Element {
@@ -74,6 +82,7 @@ export default function MainComponent(props: UserProps): JSX.Element {
         studyListShowing={studyListShowing}
         setStudyListShowing={setStudyListShowing}
       />
+      <ResourceCard />
     </>
   );
 }

@@ -22,8 +22,10 @@ export default function FilterBar({
   setStudyList,
   allTags,
   allContentTypes,
+
   studyListShowing,
   setStudyListShowing,
+
 }: FilterBarProps): JSX.Element {
   const [searchInputText, setSearchInputText] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -53,6 +55,7 @@ export default function FilterBar({
     filterListOfResources(unfliteredResourceList, setResourceList);
     filterListOfResources(unfilteredStudyList, setStudyList);
   }
+
 
   function setContentTypeAndFilter(newSelectedContentType: string) {
     // filter according to the content type
