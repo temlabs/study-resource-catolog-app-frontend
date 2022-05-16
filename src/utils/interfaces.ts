@@ -47,4 +47,17 @@ export interface FilterBarProps {
   setStudyList: (list: ResourceProp[]) => void;
   allTags: string[];
   allContentTypes: string[];
+  studyListShowing: boolean;
+  setStudyListShowing: (studyListOn: boolean) => void;
 }
+
+export interface ContentType {
+  content_id: number;
+  content_name: string;
+}
+
+export interface Tag {
+  tag_id: number;
+  tag_name: string;
+}
+

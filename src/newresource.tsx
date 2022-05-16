@@ -23,7 +23,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
 
   useEffect(() => {
     setResource(Object.assign(resource, { user_id: props.user_id }));
-  }, [props.user_id]);
+  }, [props.user_id, resource]);
 
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);

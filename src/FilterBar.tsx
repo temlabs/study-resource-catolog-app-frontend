@@ -22,6 +22,10 @@ export default function FilterBar({
   setStudyList,
   allTags,
   allContentTypes,
+
+  studyListShowing,
+  setStudyListShowing,
+
 }: FilterBarProps): JSX.Element {
   const [searchInputText, setSearchInputText] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -52,8 +56,10 @@ export default function FilterBar({
     filterListOfResources(unfilteredStudyList, setStudyList);
   }
 
-  function setContentTypeAndFilter(e: React.ChangeEvent<HTMLSelectElement>) {
-    setSelectedContentType(e.target.value);
+
+  function setContentTypeAndFilter(newSelectedContentType: string) {
+    // filter according to the content type
+    setSelectedContentType(newSelectedContentType);
     filterListOfResources(unfliteredResourceList, setResourceList);
     filterListOfResources(unfilteredStudyList, setStudyList);
   }
@@ -103,16 +109,49 @@ export default function FilterBar({
         />
 
         {/* The select drop down to filter on content type */}
-        <select
-          onChange={(e) => setContentTypeAndFilter(e)}
-          className="form-select form-select-sm"
-          aria-label=".form-select-sm example"
-        >
-          <option value={"Show all"} selected={true} />
-          {allContentTypes.map((ct, i) => (
-            <option key={i} value={ct} />
-          ))}
-        </select>
+        <div className="dropdown">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {selectedContentType.length > 0
+              ? selectedContentType
+              : "Select a content type"}
+          </button>
+          <ul
+            className="dropdown-menu btn btn-info"
+            aria-labelledby="dropdownMenuButton1"
+          >
+            {allContentTypes.map((ct) => {
+              return (
+                <li
+                  className="dropdown-item"
+                  onClick={() => setContentTypeAndFilter(ct)}
+                  key={ct}
+                >
+                  {ct}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        {/* Study list toggle */}
+        <div className="form-check form-switch">
+          <input
+            onChange={() => setStudyListShowing(!studyListShowing)}
+            className="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckDefault"
+          />
+          <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+            Show study list
+          </label>
+        </div>
       </div>
 
       <div id="tag-cloud" className="flex-row">
