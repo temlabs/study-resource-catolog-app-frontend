@@ -5,24 +5,12 @@
 
 import { useEffect, useState } from "react";
 import { baseUrl } from "./baseURL";
-import { UserProps } from "./MainComponent"
-
-interface ResourcePost {
-  user_id: number;
-  resource_name: string;
-  author_name: string;
-  url: string;
-  description: string;
-  tags: string[];
-  content_name: string;
-  build_stage: string;
-  recommendation_nature: string;
-  recommendation_reason: string;
-}
+import { NewResourceProps, ResourcePost } from "./utils/interfaces"
 
 
 
-export default function Newresource(props: UserProps): JSX.Element {
+
+export default function Newresource(props: NewResourceProps): JSX.Element {
   const [resource, setResource] = useState<ResourcePost>({
     user_id: props.user_id,
     resource_name: "",
