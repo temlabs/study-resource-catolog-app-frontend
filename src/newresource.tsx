@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { baseUrl } from "./baseURL";
-import { NewResourceProps, ResourcePost } from "./utils/interfaces"
+
+import { NewResourceProps, ResourcePost } from "./utils/interfaces";
+
 
 export default function Newresource(props: NewResourceProps): JSX.Element {
   const [resource, setResource] = useState<ResourcePost>({
@@ -17,8 +19,10 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
   });
 
   useEffect(() => {
-    setResource(Object.assign(resource, { user_id: props.user_id }))
-  }, [props.user_id, resource]) 
+
+    setResource(Object.assign(resource, { user_id: props.user_id }));
+  }, [props.user_id, resource]);
+
 
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -64,7 +68,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
       });
   };
 
-  console.log(props.user_name, props.user_id)
+  console.log(props.user_name, props.user_id);
 
   return (
     <div>
