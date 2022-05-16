@@ -1,4 +1,3 @@
-
 //import FilterBar from "./FilterBar";
 
 // function App(): JSX.Element {
@@ -25,7 +24,6 @@ export interface UserData {
   user_id: number;
   user_name: string;
   is_faculty: boolean;
-
 }
 
 export default function App(): JSX.Element {
