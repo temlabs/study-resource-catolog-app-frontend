@@ -1,26 +1,11 @@
-// to add below line to main.tsx
-// import Newresource from "./newresource";
+import { useEffect, useState } from "react";
+import { baseUrl } from "./baseURL";
 
-// onClick handler to package up object and post resource
+import { NewResourceProps, ResourcePost } from "./utils/interfaces";
 
-import { useState } from "react";
-
-interface ResourcePost {
-  user_id: number;
-  resource_name: string;
-  author_name: string;
-  url: string;
-  description: string;
-  tags: string[];
-  content_name: string;
-  build_stage: string;
-  recommendation_nature: string;
-  recommendation_reason: string;
-}
-
-export default function Newresource(props: ResourcePost): JSX.Element {
-  const [resource, setResource] = useState({
-    user_id: 0,
+export default function Newresource(props: NewResourceProps): JSX.Element {
+  const [resource, setResource] = useState<ResourcePost>({
+    user_id: props.user_id,
     resource_name: "",
     author_name: "",
     url: "",
@@ -32,11 +17,16 @@ export default function Newresource(props: ResourcePost): JSX.Element {
     recommendation_reason: "",
   });
 
+  useEffect(() => {
+    setResource(Object.assign(resource, { user_id: props.user_id }));
+  }, [props.user_id, resource]);
+
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedNature, setSelectedNature] = useState("");
 
   const handleGetTags = () => {
-    fetch("https://study-resource-catalog-backend.herokuapp.com/tags")
+    fetch(`${baseUrl}/tags`)
       .then((response) => response.json())
       .then((jsonBody) => setTags(jsonBody));
   };
@@ -115,27 +105,59 @@ export default function Newresource(props: ResourcePost): JSX.Element {
       <div className="rightFreeTextContainer">
         <textarea
           value={resource.description}
-          id="freetextbox"
+          name="description"
           placeholder="Description:"
           onChange={handleChange}
         />
       </div>
       <div className="leftContainer">
-        <select value={resource.recommendation_nature} onChange={handleChange}>
-          <option value="I recommend this resource after having used it">
-            Recommended
-          </option>
-          <option value="I do not recommend this resource, having used it">
-            Not Recommended
-          </option>
-          <option value="I haven't used this resource but it looks promising">
-            Haven't used yet
-          </option>
-        </select>
+        <div className="dropdown">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            {selectedNature.length > 0
+              ? selectedNature
+              : "choose recommendation nature:"}
+          </button>
+          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li
+              className="dropdown-item"
+              onClick={() =>
+                setSelectedNature(
+                  "I recommend this resource after having used it"
+                )
+              }
+            >
+              Recommended
+            </li>
+            <li
+              className="dropdown-item"
+              onClick={() =>
+                setSelectedNature(
+                  "I do not recommend this resource, having used it"
+                )
+              }
+            >
+              Not recommended
+            </li>
+            <li
+              className="dropdown-item"
+              onClick={() =>
+                setSelectedNature(
+                  "I haven't used this resource but it looks promising"
+                )
+              }
+            >
+              Haven't used
+            </li>
+          </ul>
+        </div>
         <br></br>
-        <input type="text" onChange={handleChange}>
-          Content Type:
-        </input>
         <br></br>
         <div className="tagdown" onClick={handleGetTags}>
           <button
@@ -170,14 +192,13 @@ export default function Newresource(props: ResourcePost): JSX.Element {
       <div className="rightFreeTextContainer">
         <textarea
           value={resource.recommendation_reason}
-          id="freetextbox"
+          name="recommendation_reason"
           placeholder="Recommendation Reason:"
           onChange={handleChange}
         />
       </div>
       <button type="submit" onClick={handleClick}>
-        {" "}
-        Submit your resource!{" "}
+        Submit your resource!
       </button>
     </div>
   );

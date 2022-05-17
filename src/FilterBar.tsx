@@ -3,151 +3,152 @@
  * these are of type ResourceProp below
  *
  * assumes that the setters for both of these are passed in and that they take a single element of type ResourceProp below
- *
  * assumes a string array of all possible tags is passed in
- *
  * assumes a string array of all possible content types is passed in
- * 
- *  
+ *
+ *
  */
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Tag from "./Tag";
-
-interface ResourceProp {
-    resource_id: number;
-    user_id: number;
-    user_name: string;
-    is_faculty: boolean;
-    resource_name: string;
-    author_name: string;
-    url: string;
-    description: string;
-    post_date: string;
-    tags: string[];
-    content_name: string;
-    build_stage: string;
-    recommendation_nature: string;
-    recommendation_reason: string;
-    net_reaction: number;
-    upvote_reaction: number;
-    downvote_reaction: number;
-}
-
-interface FilterBarProps {
-    unfliteredResourceList: ResourceProp[];
-    setResourceList: (list: ResourceProp[]) => void;
-    unfilteredStudyList: ResourceProp[];
-    setStudyList: (list: ResourceProp[]) => void;
-    allTags: string[];
-    allContentTypes: string[];
-}
-
+import { FilterBarProps, ResourceProp } from "./utils/interfaces";
 export default function FilterBar({
-    unfliteredResourceList,
-    setResourceList,
-    unfilteredStudyList,
-    setStudyList,
-    allTags,
-    allContentTypes,
+  userLoggedIn,
+  unfilteredResourceList,
+  unfilteredStudyList,
+  allTags,
+  allContentTypes,
+  studyListShowing,
+  setStudyListShowing,
+  setDisplayList,
 }: FilterBarProps): JSX.Element {
-    const [searchInputText, setSearchInputText] = useState<string>("");
-    const [selectedTags, setSelectedTags] = useState<string[]>([]);
-    const [selectedContentType, setSelectedContentType] = useState<string>("");
-
-    function addOrRemoveTag(tagName: string, tagElement: HTMLElement) {
-        const isSelected: boolean = selectedTags.includes(tagName);
-        if (isSelected) {
-            const newSelectedTags = selectedTags.filter((t) => t !== tagName); // remove the tag from the selected list
-            tagElement.classList.add("unselected");
-            setSelectedTags(newSelectedTags);
-        } else {
-            // add it to the selected list
-            const newSelectedTags: string[] = [...selectedTags];
-            newSelectedTags.push(tagName);
-            tagElement.classList.remove("unselected");
-            setSelectedTags(newSelectedTags);
-        }
-        filterListOfResources(unfliteredResourceList, setResourceList);
-        filterListOfResources(unfilteredStudyList, setStudyList);
+  const [searchInputText, setSearchInputText] = useState<string>("");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedContentType, setSelectedContentType] = useState<string>("");
+  function addOrRemoveTag(tagName: string, tagElement: HTMLElement) {
+    const isSelected: boolean = selectedTags.includes(tagName);
+    if (isSelected) {
+      const newSelectedTags = selectedTags.filter((t) => t !== tagName); // remove the tag from the selected list
+      tagElement.classList.add("unselected");
+      setSelectedTags(newSelectedTags);
+    } else {
+      // add it to the selected list
+      const newSelectedTags: string[] = [...selectedTags];
+      newSelectedTags.push(tagName);
+      tagElement.classList.remove("unselected");
+      setSelectedTags(newSelectedTags);
     }
-
-    function setSearchInputTextAndFilter(
-        e: React.ChangeEvent<HTMLInputElement>
-    ): void {
-        setSearchInputText(e.target.value);
-        filterListOfResources(unfliteredResourceList, setResourceList);
-        filterListOfResources(unfilteredStudyList, setStudyList);
+    //filterListOfResources(unfilteredResourceList);
+    //filterListOfResources(unfilteredStudyList);
+  }
+  useEffect(() => {
+    function filterListOfResources(list: ResourceProp[]) {
+      //list = studyListShowing ? unfilteredStudyList : unfilteredResourceList
+      console.log({ searchInputText });
+      const searchTextRegex = new RegExp(searchInputText);
+      // predicate functions
+      const meetsSearchTextCriteria = (resourceName: string) =>
+        searchInputText.length > 0 ? searchTextRegex.test(resourceName) : true;
+      // default behaviour is that resources with at least one of the selected tags will show
+      // if you want it so that only resources with ALL the selected tags show,
+      // replace some with every
+      const meetsTagsCriteria = (resourceTags: string[]) =>
+        selectedTags.length > 0
+          ? selectedTags.some((tag) => resourceTags.includes(tag))
+          : true;
+      const meetsContentTypeCriteria = (contentType: string) =>
+        selectedContentType.length > 0
+          ? contentType === selectedContentType
+          : true;
+      const filteredList = list.filter(
+        (r) =>
+          meetsSearchTextCriteria(r.resource_name) &&
+          meetsTagsCriteria(r.tags ? r.tags.split(",") : []) &&
+          meetsContentTypeCriteria(r.content_name)
+      );
+      setDisplayList(filteredList);
     }
-
-    function setContentTypeAndFilter(e: React.ChangeEvent<HTMLSelectElement>) {
-        setSelectedContentType(e.target.value);
-        filterListOfResources(unfliteredResourceList, setResourceList);
-        filterListOfResources(unfilteredStudyList, setStudyList);
-    }
-
-    function filterListOfResources(
-        list: ResourceProp[],
-        setListTo: (list: ResourceProp[]) => void
-    ) {
-        const searchTextRegex = new RegExp(searchInputText);
-        // predicate functions
-        const meetsSearchTextCriteria = (resourceName: string) =>
-            searchInputText.length > 0 ? searchTextRegex.test(resourceName) : true;
-        // default behaviour is that resources with at least one of the selected tags will show
-        // if you want it so that only resources with ALL the selected tags show,
-        // replace some with every
-        const meetsTagsCriteria = (resourceTags: string[]) =>
-            selectedTags.length > 0
-                ? selectedTags.some((tag) => resourceTags.includes(tag))
-                : true;
-
-        const meetsContentTypeCriteria = (contentType: string) =>
-            selectedContentType.length > 0
-                ? contentType === selectedContentType
-                : true;
-
-        const filteredList = list.filter(
-            (r) =>
-                meetsSearchTextCriteria(r.resource_name) &&
-                meetsTagsCriteria(r.tags) &&
-                meetsContentTypeCriteria(r.content_name)
-        );
-        setListTo(filteredList);
-    }
-
-    return (
-        <section className="flex-column">
-            <div id="filters" className="flex-row">
-                {/* The search bar */}
-                <input
-                    value={searchInputText}
-                    onChange={(e) => setSearchInputTextAndFilter(e)}
-                    type="text"
-                    className="form-control"
-                    placeholder="Search for a resource"
-                    aria-label="Search for a resource"
-                    aria-describedby="basic-addon1"
-                />
-
-                {/* The select drop down to filter on content type */}
-                <select
-                    onChange={(e) => setContentTypeAndFilter(e)}
-                    className="form-select form-select-sm"
-                    aria-label=".form-select-sm example"
+    studyListShowing
+      ? filterListOfResources(unfilteredStudyList)
+      : filterListOfResources(unfilteredResourceList);
+  }, [
+    selectedContentType,
+    searchInputText,
+    selectedTags,
+    studyListShowing,
+    unfilteredResourceList,
+    unfilteredStudyList,
+    setDisplayList,
+  ]);
+  return (
+    <section className="flex-column">
+      <div key="filters" className="flex-row">
+        {/* The search bar */}
+        <input
+          value={searchInputText}
+          onChange={(e) => setSearchInputText(e.target.value)}
+          type="text"
+          className="form-control"
+          placeholder="Search for a resource"
+          aria-label="Search for a resource"
+          aria-describedby="basic-addon1"
+        />
+        {/* The select drop down to filter on content type */}
+        <div className="dropdown">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {selectedContentType.length > 0
+              ? selectedContentType
+              : "Show all content types"}
+          </button>
+          <ul
+            className="dropdown-menu btn btn-info"
+            aria-labelledby="dropdownMenuButton1"
+          >
+            <li
+              key={"all"}
+              className="dropdown-item"
+              onClick={() => setSelectedContentType("")}
+            >
+              Show all content types
+            </li>
+            {allContentTypes.map((ct) => {
+              return (
+                <li
+                  className="dropdown-item"
+                  onClick={() => setSelectedContentType(ct)}
+                  key={ct}
                 >
-                    <option value={'Show all'} selected={true} />
-                    {allContentTypes.map((ct, i) => (
-                        <option key={i} value={ct} />
-                    ))}
-                </select>
-            </div>
-
-            <div id="tag-cloud" className="flex-row">
-                {allTags.map((t, i) => (
-                    <Tag key={i} name={t} addOrRemoveTag={addOrRemoveTag} />
-                ))}
-            </div>
-        </section>
-    );
+                  {ct}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        {/* Study list toggle */}
+        <div className="form-check form-switch">
+          <input
+            onChange={() => setStudyListShowing(!studyListShowing)}
+            className="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckDefault"
+            disabled={!userLoggedIn}
+          />
+          <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+            Show study list
+          </label>
+        </div>
+      </div>
+      <div key="tag-cloud" className="flex-row">
+        {allTags.map((t, i) => (
+          <Tag key={i} name={t} addOrRemoveTag={addOrRemoveTag} />
+        ))}
+      </div>
+    </section>
+  );
 }
