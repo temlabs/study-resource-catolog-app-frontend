@@ -65,7 +65,6 @@ export default function MainComponent(props: UserProps): JSX.Element {
         tags={allTags}
       />
       <FilterBar
-
         userLoggedIn={props.user_id === 0 ? false : true}
         unfilteredResourceList={allResourcesList}
         // setResourceList={setAllResourcesList}
