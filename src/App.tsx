@@ -2,7 +2,7 @@ import { useState } from "react";
 import Header from "./Header";
 import MainComponent from "./MainComponent";
 import Footer from "./Footer";
-import "./styles/style.css"
+import "./styles/style.css";
 
 export interface UserData {
   user_id: number;

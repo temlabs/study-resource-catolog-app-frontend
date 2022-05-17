@@ -6,39 +6,36 @@ import Newresource from "./newresource";
 import { UserProps, ContentType, Tag, ResourceProp } from "./utils/interfaces";
 import ResourceCard from "./ResourceCard";
 
-
-
-
 export default function MainComponent(props: UserProps): JSX.Element {
   const [studyListShowing, setStudyListShowing] = useState<boolean>(false);
   const [contentTypes, setContentTypes] = useState<string[]>([]);
   const [allTags, setAllTags] = useState<string[]>([]);
   const [studyList, setStudyList] = useState<ResourceProp[]>([]);
   const [allResourcesList, setAllResourcesList] = useState<ResourceProp[]>([]);
-  const [displayList, setDisplayList] = useState<ResourceProp[]>([])
+  const [displayList, setDisplayList] = useState<ResourceProp[]>([]);
 
   // fetch the necessary data once only
   useEffect(() => {
     const getContentTypes = async () => {
-      const contentTypesData = await axios.get(
-        `${baseUrl}/content-type`
+      const contentTypesData = await axios.get(`${baseUrl}/content-type`);
+      const contentTypeNames = (contentTypesData.data as ContentType[]).map(
+        (ct) => ct.content_name
       );
-      const contentTypeNames = (contentTypesData.data as ContentType[]).map((ct) => ct.content_name);
       setContentTypes(contentTypeNames);
     };
 
     const getAllTags = async () => {
       const contentTypesData = await axios.get(`${baseUrl}/tags`);
-      const allTagNames = (contentTypesData.data as Tag[]).map((tag) => tag.tag_name);
+      const allTagNames = (contentTypesData.data as Tag[]).map(
+        (tag) => tag.tag_name
+      );
       setAllTags(allTagNames);
     };
 
     const getResourceList = async () => {
-      const resourceListData = await axios.get(
-        `${baseUrl}/resources`
-      );
+      const resourceListData = await axios.get(`${baseUrl}/resources`);
       setAllResourcesList(resourceListData.data as ResourceProp[]);
-      setDisplayList(resourceListData.data as ResourceProp[])
+      setDisplayList(resourceListData.data as ResourceProp[]);
     };
 
     getContentTypes();
@@ -60,8 +57,6 @@ export default function MainComponent(props: UserProps): JSX.Element {
     getStudyList();
   }, [props.user_id]);
 
-
-
   return (
     <>
       <Newresource
@@ -80,16 +75,13 @@ export default function MainComponent(props: UserProps): JSX.Element {
         setDisplayList={setDisplayList}
       />
       <p>
-        {`${displayList.length} results of ${studyListShowing ? studyList.length : allResourcesList.length}`}
+        {`${displayList.length} results of ${
+          studyListShowing ? studyList.length : allResourcesList.length
+        }`}
       </p>
-      {displayList.map((resource, ix) =>
-        <ResourceCard
-          key={ix}
-          resource={resource}
-          user={props}
-        />
-
-      )}
+      {displayList.map((resource, ix) => (
+        <ResourceCard key={ix} resource={resource} user={props} />
+      ))}
     </>
   );
 }
