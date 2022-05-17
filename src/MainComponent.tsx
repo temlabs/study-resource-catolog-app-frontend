@@ -65,10 +65,9 @@ export default function MainComponent(props: UserProps): JSX.Element {
         tags={allTags}
       />
       <FilterBar
-
         userLoggedIn={props.user_id === 0 ? false : true}
         unfilteredResourceList={allResourcesList}
-        setResourceList={setAllResourcesList}
+        // setResourceList={setAllResourcesList}
         unfilteredStudyList={studyList}
         allTags={allTags}
         allContentTypes={contentTypes}
@@ -81,6 +80,9 @@ export default function MainComponent(props: UserProps): JSX.Element {
           studyListShowing ? studyList.length : allResourcesList.length
         }`}
       </p>
+      {displayList.map((resource, ix) => (
+        <ResourceCard key={ix} resource={resource} user={props} />
+      ))}
     </>
   );
 }
