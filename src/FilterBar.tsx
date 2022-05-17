@@ -26,6 +26,8 @@ export default function FilterBar({
   const [searchInputText, setSearchInputText] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedContentType, setSelectedContentType] = useState<string>("");
+  const [displayList, setDisplayList] = useState([]);
+  const [studyListShowing, setStudyListShowing] = useState([]);
 
   function addOrRemoveTag(tagName: string, tagElement: HTMLElement) {
     const isSelected: boolean = selectedTags.includes(tagName);

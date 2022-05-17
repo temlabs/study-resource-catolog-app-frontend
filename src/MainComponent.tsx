@@ -61,7 +61,7 @@ export default function MainComponent(props: UserProps): JSX.Element {
     const listToRender: ResourceProp[] = studyListShowing
       ? studyList
       : allResourcesList;
-  }, [props.user_id, allResourcesList]);
+  }, [props.user_id, allResourcesList, studyList, studyListShowing]);
 
   return (
     <>
