@@ -86,9 +86,6 @@ export default function MainComponent(props: UserProps): JSX.Element {
       {displayList.map((resource, ix) => (
         <ResourceCard key={ix} resource={resource} user={props} />
       ))}
-      <div>
-      {listToRender}
-      </div>
     </>
   );
 }
