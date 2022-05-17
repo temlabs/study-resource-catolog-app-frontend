@@ -28,14 +28,14 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
       polarity: -1,
     });
   };
-
+  console.log(props.resource.tags)
   return (
     <div className="card">
       <div className="card-body">
         <h5 className="card-title">{props.resource.resource_name}</h5>
-        <h6 className="card-subtitle mb-2 text-muted"></h6>{" "}
-        {props.resource.author_name}
-        <a href="`${props.resource.url}`" className="card-link">
+        <h6 className="card-subtitle mb-2 text-muted">{props.resource.author_name}</h6>
+
+        <a href={props.resource.url} className="card-link">
           {props.resource.url}
         </a>
         <p className="card-text"> {props.resource.description}</p>
@@ -44,11 +44,11 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
         <span className="badge badge-primary">
           {props.resource.content_name}
         </span>
-        {props.resource.tags.map((tag, ix) => (
+        {props.resource.tags ? props.resource.tags.split(",").map((tag, ix) => (
           <span key={ix} className="badge badge-primary">
             {tag}
           </span>
-        ))}
+        )) : "No tags"}
         <span className="badge badge-primary">
           {props.resource.build_stage}
         </span>
