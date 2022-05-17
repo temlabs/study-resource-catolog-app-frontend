@@ -73,7 +73,7 @@ export default function MainComponent(props: UserProps): JSX.Element {
         tags={allTags}
       />
       <FilterBar
-        unfliteredResourceList={allResourcesList}
+        unfilteredResourceList={allResourcesList}
         setResourceList={setAllResourcesList}
         unfilteredStudyList={studyList}
         setStudyList={setStudyList}

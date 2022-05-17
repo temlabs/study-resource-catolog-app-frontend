@@ -16,7 +16,7 @@ import Tag from "./Tag";
 import { FilterBarProps, ResourceProp } from "./utils/interfaces";
 
 export default function FilterBar({
-    unfliteredResourceList,
+    unfilteredResourceList,
     setResourceList,
     unfilteredStudyList,
     setStudyList,
@@ -54,7 +54,7 @@ export default function FilterBar({
             tagElement.classList.remove("unselected");
             setSelectedTags(newSelectedTags);
         }
-    filterListOfResources(unfliteredResourceList, setResourceList);
+    filterListOfResources(unfilteredResourceList, setResourceList);
     filterListOfResources(unfilteredStudyList, setStudyList);
   }
 
@@ -72,7 +72,7 @@ export default function FilterBar({
     function setContentTypeAndFilter(newSelectedContentType: string) {
         // filter according to the content type
         setSelectedContentType(newSelectedContentType);
-        filterListOfResources(unfliteredResourceList, setResourceList);
+        filterListOfResources(unfilteredResourceList, setResourceList);
         filterListOfResources(unfilteredStudyList, setStudyList);
     }
 
