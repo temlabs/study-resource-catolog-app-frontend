@@ -50,6 +50,7 @@ export interface FilterBarProps {
     studyListShowing: boolean;
     setStudyListShowing: (studyListOn: boolean) => void;
     setDisplayList: (list: ResourceProp[]) => void
+
 }
 
 export interface ContentType {

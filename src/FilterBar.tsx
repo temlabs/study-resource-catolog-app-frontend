@@ -26,10 +26,20 @@ export default function FilterBar({
     setStudyListShowing,
     setDisplayList
 
+
+export default function FilterBar({
+    unfilteredResourceList,
+    setResourceList,
+    unfilteredStudyList,
+    setStudyList,
+    allTags,
+    allContentTypes,
 }: FilterBarProps): JSX.Element {
     const [searchInputText, setSearchInputText] = useState<string>("");
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [selectedContentType, setSelectedContentType] = useState<string>("");
+
+
 
     function addOrRemoveTag(tagName: string, tagElement: HTMLElement) {
         const isSelected: boolean = selectedTags.includes(tagName);
@@ -44,17 +54,19 @@ export default function FilterBar({
             tagElement.classList.remove("unselected");
             setSelectedTags(newSelectedTags);
         }
-        filterListOfResources(unfliteredResourceList, setResourceList);
-        filterListOfResources(unfilteredStudyList, setStudyList);
-    }
+    filterListOfResources(unfliteredResourceList, setResourceList);
+    filterListOfResources(unfilteredStudyList, setStudyList);
+  }
+
 
     function setSearchInputTextAndFilter(
         e: React.ChangeEvent<HTMLInputElement>
     ): void {
         setSearchInputText(e.target.value);
-        filterListOfResources(unfliteredResourceList, setResourceList);
+        filterListOfResources(unfilteredResourceList, setResourceList);
         filterListOfResources(unfilteredStudyList, setStudyList);
     }
+
 
 
     function setContentTypeAndFilter(newSelectedContentType: string) {
