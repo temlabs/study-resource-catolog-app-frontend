@@ -164,5 +164,77 @@ export default function FilterBar({
                 ))}
             </div>
         </section>
+
     );
+    setListTo(filteredList);
+    setDisplayList(filteredList);
+  }
+
+  return (
+    <section className="flex-column">
+      <div id="filters" className="flex-row">
+        {/* The search bar */}
+        <input
+          value={searchInputText}
+          onChange={(e) => setSearchInputTextAndFilter(e)}
+          type="text"
+          className="form-control"
+          placeholder="Search for a resource"
+          aria-label="Search for a resource"
+          aria-describedby="basic-addon1"
+        />
+
+        {/* The select drop down to filter on content type */}
+        <div className="dropdown">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {selectedContentType.length > 0
+              ? selectedContentType
+              : "Select a content type"}
+          </button>
+          <ul
+            className="dropdown-menu btn btn-info"
+            aria-labelledby="dropdownMenuButton1"
+          >
+            {allContentTypes.map((ct) => {
+              return (
+                <li
+                  className="dropdown-item"
+                  onClick={() => setContentTypeAndFilter(ct)}
+                  key={ct}
+                >
+                  {ct}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        {/* Study list toggle */}
+        <div className="form-check form-switch">
+          <input
+            onChange={() => setStudyListShowing(!studyListShowing)}
+            className="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckDefault"
+          />
+          <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+            Show study list
+          </label>
+        </div>
+      </div>
+
+      <div id="tag-cloud" className="flex-row">
+        {allTags.map((t, i) => (
+          <Tag key={i} name={t} addOrRemoveTag={addOrRemoveTag} />
+        ))}
+      </div>
+    </section>
+  );
 }
