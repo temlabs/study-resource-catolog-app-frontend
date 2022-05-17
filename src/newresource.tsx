@@ -68,7 +68,6 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
       });
   };
 
-  console.log(props.user_name, props.user_id);
 
   return (
     <div>
@@ -118,33 +117,33 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
       <div className="leftContainer">
 
         <div className="dropdown">
-          <button 
-            className="btn btn-secondary dropdown-toggle" 
-            type="button" 
-            id="dropdownMenuButton" 
-            data-bs-toggle="dropdown" 
-            aria-haspopup="true" 
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
             aria-expanded="false"
           >
-            {selectedNature.length > 0 ? 
-            selectedNature : 'choose recommendation nature:'}
+            {selectedNature.length > 0 ?
+              selectedNature : 'choose recommendation nature:'}
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li 
-              className="dropdown-item" 
+            <li
+              className="dropdown-item"
               onClick={() => setSelectedNature("I recommend this resource after having used it")}
             >Recommended</li>
-            <li 
-              className="dropdown-item" 
+            <li
+              className="dropdown-item"
               onClick={() => setSelectedNature("I do not recommend this resource, having used it")}
-              >Not recommended</li>
-            <li 
-              className="dropdown-item" 
+            >Not recommended</li>
+            <li
+              className="dropdown-item"
               onClick={() => setSelectedNature("I haven't used this resource but it looks promising")}
-              >Haven't used</li>
+            >Haven't used</li>
           </ul>
         </div>
-        <br></br> 
+        <br></br>
         <br></br>
         <div className="tagdown" onClick={handleGetTags}>
           <button

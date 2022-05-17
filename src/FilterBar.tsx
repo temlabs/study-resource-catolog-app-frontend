@@ -11,34 +11,23 @@
  *
  */
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Tag from "./Tag";
 import { FilterBarProps, ResourceProp } from "./utils/interfaces";
 
 export default function FilterBar({
-    unfliteredResourceList,
-    setResourceList,
+    userLoggedIn,
+    unfilteredResourceList,
     unfilteredStudyList,
-    setStudyList,
     allTags,
     allContentTypes,
     studyListShowing,
     setStudyListShowing,
     setDisplayList
-
-
-export default function FilterBar({
-    unfilteredResourceList,
-    setResourceList,
-    unfilteredStudyList,
-    setStudyList,
-    allTags,
-    allContentTypes,
 }: FilterBarProps): JSX.Element {
     const [searchInputText, setSearchInputText] = useState<string>("");
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [selectedContentType, setSelectedContentType] = useState<string>("");
-
 
 
     function addOrRemoveTag(tagName: string, tagElement: HTMLElement) {
@@ -54,32 +43,21 @@ export default function FilterBar({
             tagElement.classList.remove("unselected");
             setSelectedTags(newSelectedTags);
         }
-    filterListOfResources(unfliteredResourceList, setResourceList);
-    filterListOfResources(unfilteredStudyList, setStudyList);
-  }
-
-
-    function setSearchInputTextAndFilter(
-        e: React.ChangeEvent<HTMLInputElement>
-    ): void {
-        setSearchInputText(e.target.value);
-        filterListOfResources(unfilteredResourceList, setResourceList);
-        filterListOfResources(unfilteredStudyList, setStudyList);
+        //filterListOfResources(unfilteredResourceList);
+        //filterListOfResources(unfilteredStudyList);
     }
 
+    useEffect(() => {
+        console.log(studyListShowing)
+        studyListShowing ? filterListOfResources(unfilteredStudyList) : filterListOfResources(unfilteredResourceList)
+    }, [selectedContentType, searchInputText, selectedTags, studyListShowing])
 
-
-    function setContentTypeAndFilter(newSelectedContentType: string) {
-        // filter according to the content type
-        setSelectedContentType(newSelectedContentType);
-        filterListOfResources(unfliteredResourceList, setResourceList);
-        filterListOfResources(unfilteredStudyList, setStudyList);
-    }
 
     function filterListOfResources(
-        list: ResourceProp[],
-        setListTo: (list: ResourceProp[]) => void
+        list: ResourceProp[]
     ) {
+        //list = studyListShowing ? unfilteredStudyList : unfilteredResourceList
+        console.log({ searchInputText })
         const searchTextRegex = new RegExp(searchInputText);
         // predicate functions
         const meetsSearchTextCriteria = (resourceName: string) =>
@@ -103,17 +81,16 @@ export default function FilterBar({
                 meetsTagsCriteria(r.tags ? r.tags.split(",") : []) &&
                 meetsContentTypeCriteria(r.content_name)
         );
-        setListTo(filteredList);
         setDisplayList(filteredList)
     }
 
     return (
         <section className="flex-column">
-            <div id="filters" className="flex-row">
+            <div key="filters" className="flex-row">
                 {/* The search bar */}
                 <input
                     value={searchInputText}
-                    onChange={(e) => setSearchInputTextAndFilter(e)}
+                    onChange={(e) => setSearchInputText(e.target.value)}
                     type="text"
                     className="form-control"
                     placeholder="Search for a resource"
@@ -132,17 +109,20 @@ export default function FilterBar({
                     >
                         {selectedContentType.length > 0
                             ? selectedContentType
-                            : "Select a content type"}
+                            : "Show all content types"}
                     </button>
                     <ul
                         className="dropdown-menu btn btn-info"
                         aria-labelledby="dropdownMenuButton1"
                     >
+                        <li key={'all'} className="dropdown-item" onClick={() => setSelectedContentType("")}>
+                            Show all content types
+                        </li>
                         {allContentTypes.map((ct) => {
                             return (
                                 <li
                                     className="dropdown-item"
-                                    onClick={() => setContentTypeAndFilter(ct)}
+                                    onClick={() => setSelectedContentType(ct)}
                                     key={ct}
                                 >
                                     {ct}
@@ -160,6 +140,7 @@ export default function FilterBar({
                         type="checkbox"
                         role="switch"
                         id="flexSwitchCheckDefault"
+                        disabled={!userLoggedIn}
                     />
                     <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
                         Show study list
@@ -167,7 +148,7 @@ export default function FilterBar({
                 </div>
             </div>
 
-            <div id="tag-cloud" className="flex-row">
+            <div key="tag-cloud" className="flex-row">
                 {allTags.map((t, i) => (
                     <Tag key={i} name={t} addOrRemoveTag={addOrRemoveTag} />
                 ))}

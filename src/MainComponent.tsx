@@ -38,6 +38,7 @@ export default function MainComponent(props: UserProps): JSX.Element {
         `${baseUrl}/resources`
       );
       setAllResourcesList(resourceListData.data as ResourceProp[]);
+      setDisplayList(resourceListData.data as ResourceProp[])
     };
 
     getContentTypes();
@@ -59,11 +60,7 @@ export default function MainComponent(props: UserProps): JSX.Element {
     getStudyList();
   }, [props.user_id]);
 
-  // RENDER CARDS FOR THE LIST BELOW
-  useEffect(() => {
-    const listToRender: ResourceProp[] = studyListShowing ? studyList : allResourcesList;
 
-  }, [props.user_id, allResourcesList])
 
   return (
     <>
@@ -73,16 +70,18 @@ export default function MainComponent(props: UserProps): JSX.Element {
         tags={allTags}
       />
       <FilterBar
-        unfliteredResourceList={allResourcesList}
-        setResourceList={setAllResourcesList}
+        userLoggedIn={props.user_id === 0 ? false : true}
+        unfilteredResourceList={allResourcesList}
         unfilteredStudyList={studyList}
-        setStudyList={setStudyList}
         allTags={allTags}
         allContentTypes={contentTypes}
         studyListShowing={studyListShowing}
         setStudyListShowing={setStudyListShowing}
         setDisplayList={setDisplayList}
       />
+      <p>
+        {`${displayList.length} results of ${studyListShowing ? studyList.length : allResourcesList.length}`}
+      </p>
       {displayList.map((resource, ix) =>
         <ResourceCard
           key={ix}
