@@ -22,18 +22,6 @@ export default function FilterBar({
     setStudyList,
     allTags,
     allContentTypes,
-    studyListShowing,
-    setStudyListShowing,
-    setDisplayList
-
-
-export default function FilterBar({
-    unfilteredResourceList,
-    setResourceList,
-    unfilteredStudyList,
-    setStudyList,
-    allTags,
-    allContentTypes,
 }: FilterBarProps): JSX.Element {
     const [searchInputText, setSearchInputText] = useState<string>("");
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
