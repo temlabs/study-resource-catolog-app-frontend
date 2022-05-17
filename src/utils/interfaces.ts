@@ -44,8 +44,8 @@ export interface FilterBarProps {
   userLoggedIn: boolean;
   unfilteredResourceList: ResourceProp[];
   unfilteredStudyList: ResourceProp[];
-  setResourceList: (list: ResourceProp[]) => void;
-  setStudyList: (list: ResourceProp[]) => void;
+  // setResourceList: (list: ResourceProp[]) => void;
+  // setStudyList: (list: ResourceProp[]) => void;
   allTags: string[];
   allContentTypes: string[];
   studyListShowing: boolean;

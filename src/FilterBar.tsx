@@ -3,20 +3,15 @@
  * these are of type ResourceProp below
  *
  * assumes that the setters for both of these are passed in and that they take a single element of type ResourceProp below
- *
  * assumes a string array of all possible tags is passed in
- *
  * assumes a string array of all possible content types is passed in
  *
  *
  */
-
  import React, { useEffect, useState } from "react";
  import Tag from "./Tag";
  import { FilterBarProps, ResourceProp } from "./utils/interfaces";
- 
- export default function FilterBar(
-   {
+ export default function FilterBar({
      userLoggedIn,
      unfilteredResourceList,
      unfilteredStudyList,
@@ -25,12 +20,10 @@
      studyListShowing,
      setStudyListShowing,
      setDisplayList,
-   }: FilterBarProps): JSX.Element 
-   {
+ }: FilterBarProps): JSX.Element {
      const [searchInputText, setSearchInputText] = useState<string>("");
      const [selectedTags, setSelectedTags] = useState<string[]>([]);
      const [selectedContentType, setSelectedContentType] = useState<string>("");
- 
      function addOrRemoveTag(tagName: string, tagElement: HTMLElement) {
          const isSelected: boolean = selectedTags.includes(tagName);
          if (isSelected) {
@@ -47,8 +40,6 @@
          //filterListOfResources(unfilteredResourceList);
          //filterListOfResources(unfilteredStudyList);
      }
- 
- 
      useEffect(() => {
          function filterListOfResources(list: ResourceProp[]) {
              //list = studyListShowing ? unfilteredStudyList : unfilteredResourceList
@@ -64,12 +55,10 @@
                  selectedTags.length > 0
                      ? selectedTags.some((tag) => resourceTags.includes(tag))
                      : true;
- 
              const meetsContentTypeCriteria = (contentType: string) =>
                  selectedContentType.length > 0
                      ? contentType === selectedContentType
                      : true;
- 
              const filteredList = list.filter(
                  (r) =>
                      meetsSearchTextCriteria(r.resource_name) &&
@@ -78,7 +67,6 @@
              );
              setDisplayList(filteredList);
          }
- 
          studyListShowing
              ? filterListOfResources(unfilteredStudyList)
              : filterListOfResources(unfilteredResourceList);
@@ -91,7 +79,6 @@
          unfilteredStudyList,
          setDisplayList
      ]);
- 
      return (
          <section className="flex-column">
              <div key="filters" className="flex-row">
@@ -105,7 +92,6 @@
                      aria-label="Search for a resource"
                      aria-describedby="basic-addon1"
                  />
- 
                  {/* The select drop down to filter on content type */}
                  <div className="dropdown">
                      <button
@@ -143,7 +129,6 @@
                          })}
                      </ul>
                  </div>
- 
                  {/* Study list toggle */}
                  <div className="form-check form-switch">
                      <input
@@ -159,18 +144,11 @@
                      </label>
                  </div>
              </div>
- 
              <div key="tag-cloud" className="flex-row">
                  {allTags.map((t, i) => (
                      <Tag key={i} name={t} addOrRemoveTag={addOrRemoveTag} />
                  ))}
              </div>
          </section>
- 
      );
-    //  setListTo(filteredList);
-    //  setDisplayList(filteredList);
-   }
- 
- 
- 
+ }
