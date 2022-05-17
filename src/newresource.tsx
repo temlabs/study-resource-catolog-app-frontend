@@ -3,7 +3,6 @@ import { baseUrl } from "./baseURL";
 
 import { NewResourceProps, ResourcePost } from "./utils/interfaces";
 
-
 export default function Newresource(props: NewResourceProps): JSX.Element {
   const [resource, setResource] = useState<ResourcePost>({
     user_id: props.user_id,
@@ -19,10 +18,8 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
   });
 
   useEffect(() => {
-
     setResource(Object.assign(resource, { user_id: props.user_id }));
   }, [props.user_id, resource]);
-
 
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -116,35 +113,53 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
         />
       </div>
       <div className="leftContainer">
-
         <div className="dropdown">
-          <button 
-            className="btn btn-secondary dropdown-toggle" 
-            type="button" 
-            id="dropdownMenuButton" 
-            data-bs-toggle="dropdown" 
-            aria-haspopup="true" 
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
             aria-expanded="false"
           >
-            {selectedNature.length > 0 ? 
-            selectedNature : 'choose recommendation nature:'}
+            {selectedNature.length > 0
+              ? selectedNature
+              : "choose recommendation nature:"}
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li 
-              className="dropdown-item" 
-              onClick={() => setSelectedNature("I recommend this resource after having used it")}
-            >Recommended</li>
-            <li 
-              className="dropdown-item" 
-              onClick={() => setSelectedNature("I do not recommend this resource, having used it")}
-              >Not recommended</li>
-            <li 
-              className="dropdown-item" 
-              onClick={() => setSelectedNature("I haven't used this resource but it looks promising")}
-              >Haven't used</li>
+            <li
+              className="dropdown-item"
+              onClick={() =>
+                setSelectedNature(
+                  "I recommend this resource after having used it"
+                )
+              }
+            >
+              Recommended
+            </li>
+            <li
+              className="dropdown-item"
+              onClick={() =>
+                setSelectedNature(
+                  "I do not recommend this resource, having used it"
+                )
+              }
+            >
+              Not recommended
+            </li>
+            <li
+              className="dropdown-item"
+              onClick={() =>
+                setSelectedNature(
+                  "I haven't used this resource but it looks promising"
+                )
+              }
+            >
+              Haven't used
+            </li>
           </ul>
         </div>
-        <br></br> 
+        <br></br>
         <br></br>
         <div className="tagdown" onClick={handleGetTags}>
           <button

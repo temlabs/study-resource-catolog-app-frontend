@@ -4,7 +4,7 @@
 //   return (
 //     <>
 //       {/* <FilterBar
-//       unfliteredResourceList={}
+//       unfilteredResourceList={}
 //       setResourceList={}
 //       unfilteredStudyList={}
 //       setStudyList={}

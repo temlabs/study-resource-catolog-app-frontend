@@ -6,37 +6,34 @@ import Newresource from "./newresource";
 import { UserProps, ContentType, Tag, ResourceProp } from "./utils/interfaces";
 import ResourceCard from "./ResourceCard";
 
-
-
-
 export default function MainComponent(props: UserProps): JSX.Element {
   const [studyListShowing, setStudyListShowing] = useState<boolean>(false);
   const [contentTypes, setContentTypes] = useState<string[]>([]);
   const [allTags, setAllTags] = useState<string[]>([]);
   const [studyList, setStudyList] = useState<ResourceProp[]>([]);
   const [allResourcesList, setAllResourcesList] = useState<ResourceProp[]>([]);
-  const [displayList, setDisplayList] = useState<ResourceProp[]>([])
+  const [displayList, setDisplayList] = useState<ResourceProp[]>([]);
 
   // fetch the necessary data once only
   useEffect(() => {
     const getContentTypes = async () => {
-      const contentTypesData = await axios.get(
-        `${baseUrl}/content-type`
+      const contentTypesData = await axios.get(`${baseUrl}/content-type`);
+      const contentTypeNames = (contentTypesData.data as ContentType[]).map(
+        (ct) => ct.content_name
       );
-      const contentTypeNames = (contentTypesData.data as ContentType[]).map((ct) => ct.content_name);
       setContentTypes(contentTypeNames);
     };
 
     const getAllTags = async () => {
       const contentTypesData = await axios.get(`${baseUrl}/tags`);
-      const allTagNames = (contentTypesData.data as Tag[]).map((tag) => tag.tag_name);
+      const allTagNames = (contentTypesData.data as Tag[]).map(
+        (tag) => tag.tag_name
+      );
       setAllTags(allTagNames);
     };
 
     const getResourceList = async () => {
-      const resourceListData = await axios.get(
-        `${baseUrl}/resources`
-      );
+      const resourceListData = await axios.get(`${baseUrl}/resources`);
       setAllResourcesList(resourceListData.data as ResourceProp[]);
     };
 
@@ -61,9 +58,12 @@ export default function MainComponent(props: UserProps): JSX.Element {
 
   // RENDER CARDS FOR THE LIST BELOW
   useEffect(() => {
-    const listToRender: ResourceProp[] = studyListShowing ? studyList : allResourcesList;
-
-  }, [props.user_id, allResourcesList])
+    // TODO: const 'listToRender' is unused?? 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const listToRender: ResourceProp[] = studyListShowing
+      ? studyList
+      : allResourcesList;
+  }, [props.user_id, allResourcesList, studyList, studyListShowing]);
 
   return (
     <>
@@ -73,7 +73,7 @@ export default function MainComponent(props: UserProps): JSX.Element {
         tags={allTags}
       />
       <FilterBar
-        unfliteredResourceList={allResourcesList}
+        unfilteredResourceList={allResourcesList}
         setResourceList={setAllResourcesList}
         unfilteredStudyList={studyList}
         setStudyList={setStudyList}
@@ -83,14 +83,9 @@ export default function MainComponent(props: UserProps): JSX.Element {
         setStudyListShowing={setStudyListShowing}
         setDisplayList={setDisplayList}
       />
-      {displayList.map((resource, ix) =>
-        <ResourceCard
-          key={ix}
-          resource={resource}
-          user={props}
-        />
-
-      )}
+      {displayList.map((resource, ix) => (
+        <ResourceCard key={ix} resource={resource} user={props} />
+      ))}
     </>
   );
 }
