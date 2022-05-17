@@ -28,7 +28,7 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
       polarity: -1,
     });
   };
-  console.log(props.resource.tags);
+
   return (
     <div className="card">
       <div className="card-body">

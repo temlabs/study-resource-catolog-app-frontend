@@ -65,8 +65,6 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
       });
   };
 
-  console.log(props.user_name, props.user_id);
-
   return (
     <div>
       <h3 className="title">Add new resource</h3>

@@ -35,6 +35,7 @@ export default function MainComponent(props: UserProps): JSX.Element {
     const getResourceList = async () => {
       const resourceListData = await axios.get(`${baseUrl}/resources`);
       setAllResourcesList(resourceListData.data as ResourceProp[]);
+      setDisplayList(resourceListData.data as ResourceProp[]);
     };
 
     getContentTypes();
@@ -56,15 +57,6 @@ export default function MainComponent(props: UserProps): JSX.Element {
     getStudyList();
   }, [props.user_id]);
 
-  // RENDER CARDS FOR THE LIST BELOW
-  useEffect(() => {
-    // TODO: const 'listToRender' is unused?? 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const listToRender: ResourceProp[] = studyListShowing
-      ? studyList
-      : allResourcesList;
-  }, [props.user_id, allResourcesList, studyList, studyListShowing]);
-
   return (
     <>
       <Newresource
@@ -73,19 +65,22 @@ export default function MainComponent(props: UserProps): JSX.Element {
         tags={allTags}
       />
       <FilterBar
+
+        userLoggedIn={props.user_id === 0 ? false : true}
         unfilteredResourceList={allResourcesList}
         setResourceList={setAllResourcesList}
         unfilteredStudyList={studyList}
-        setStudyList={setStudyList}
         allTags={allTags}
         allContentTypes={contentTypes}
         studyListShowing={studyListShowing}
         setStudyListShowing={setStudyListShowing}
         setDisplayList={setDisplayList}
       />
-      {displayList.map((resource, ix) => (
-        <ResourceCard key={ix} resource={resource} user={props} />
-      ))}
+      <p>
+        {`${displayList.length} results of ${
+          studyListShowing ? studyList.length : allResourcesList.length
+        }`}
+      </p>
     </>
   );
 }

@@ -1,24 +1,9 @@
-//import FilterBar from "./FilterBar";
-
-// function App(): JSX.Element {
-//   return (
-//     <>
-//       {/* <FilterBar
-//       unfilteredResourceList={}
-//       setResourceList={}
-//       unfilteredStudyList={}
-//       setStudyList={}
-//       allTags={}
-//       allContentTypes={}
-//     /> */}
-//     </>
-//   );
 
 import { useState } from "react";
-
 import Header from "./Header";
 import MainComponent from "./MainComponent";
 import Footer from "./Footer";
+import "./styles/style.css";
 
 export interface UserData {
   user_id: number;

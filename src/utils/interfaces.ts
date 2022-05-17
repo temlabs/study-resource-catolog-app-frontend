@@ -41,9 +41,10 @@ export interface ResourcePost {
 }
 
 export interface FilterBarProps {
+  userLoggedIn: boolean;
   unfilteredResourceList: ResourceProp[];
-  setResourceList: (list: ResourceProp[]) => void;
   unfilteredStudyList: ResourceProp[];
+  setResourceList: (list: ResourceProp[]) => void;
   setStudyList: (list: ResourceProp[]) => void;
   allTags: string[];
   allContentTypes: string[];
