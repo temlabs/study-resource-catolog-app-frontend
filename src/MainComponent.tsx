@@ -58,6 +58,8 @@ export default function MainComponent(props: UserProps): JSX.Element {
 
   // RENDER CARDS FOR THE LIST BELOW
   useEffect(() => {
+    // TODO: const 'listToRender' is unused?? 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const listToRender: ResourceProp[] = studyListShowing
       ? studyList
       : allResourcesList;
@@ -84,6 +86,9 @@ export default function MainComponent(props: UserProps): JSX.Element {
       {displayList.map((resource, ix) => (
         <ResourceCard key={ix} resource={resource} user={props} />
       ))}
+      <div>
+      {listToRender}
+      </div>
     </>
   );
 }
