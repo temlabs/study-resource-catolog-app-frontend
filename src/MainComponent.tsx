@@ -76,8 +76,9 @@ export default function MainComponent(props: UserProps): JSX.Element {
         setDisplayList={setDisplayList}
       />
       <p>
-        {`${displayList.length} results of ${studyListShowing ? studyList.length : allResourcesList.length
-          }`}
+        {`${displayList.length} results of ${
+          studyListShowing ? studyList.length : allResourcesList.length
+        }`}
       </p>
       {displayList.map((resource, ix) => (
         <ResourceCard key={ix} resource={resource} user={props} />
