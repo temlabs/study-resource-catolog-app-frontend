@@ -17,7 +17,7 @@ export default function MainComponent(props: UserProps): JSX.Element {
   const [studyListTrigger, setStudyListTrigger] = useState<boolean>(false);
 
   // fetch the necessary data once only
-  
+
   useEffect(() => {
     const getContentTypes = async () => {
       try {
