@@ -53,13 +53,18 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
   };
 
   useEffect(()=> {
-    const getComments = async () => {
-      if(props.resource.resource_id !== 0){
-        const commentsData = await axios.get(`${baseUrl}/comments/${props.resource.resource_id}`)
-        setComments(commentsData.data)
+    try {
+      const getComments = async () => {
+        if(props.resource.resource_id !== 0){
+          const commentsData = await axios.get(`${baseUrl}/comments/${props.resource.resource_id}`)
+          setComments(commentsData.data)
+          getComments()
+        }
       }
+      
+    } catch (error) {
+      console.error(error)
     }
-    getComments()
   }, [commentsTrigger])
 
   const postComment = (comment:string) => {

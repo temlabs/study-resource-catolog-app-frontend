@@ -27,11 +27,17 @@ export default function MainComponent(props: UserProps): JSX.Element {
     };
 
     const getAllTags = async () => {
-      const contentTypesData = await axios.get(`${baseUrl}/tags`);
-      const allTagNames = (contentTypesData.data as Tag[]).map(
-        (tag) => tag.tag_name
-      );
-      setAllTags(allTagNames);
+      try {
+        const contentTypesData = await axios.get(`${baseUrl}/tags`);
+        const allTagNames = (contentTypesData.data as Tag[]).map(
+          (tag) => tag.tag_name
+        );
+        setAllTags(allTagNames);
+        
+      } catch (error) {
+        console.error(error)
+      }
+        
     };
 
     const getResourceList = async () => {
