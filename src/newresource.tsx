@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { baseUrl } from "./baseURL";
 
 import { NewResourceProps, ResourcePost } from "./utils/interfaces";
 
@@ -21,16 +20,11 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
     setResource(Object.assign(resource, { user_id: props.user_id }));
   }, [props.user_id, resource]);
 
-
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedNature, setSelectedNature] = useState("");
 
-
   const handleAddTag = (value: string) => {
-    setSelectedTags((prevSelectedTags) => [
-      ...prevSelectedTags,
-      value,
-    ]);
+    setSelectedTags((prevSelectedTags) => [...prevSelectedTags, value]);
   };
 
   const handleChange = (event: { target: { name: string; value: string } }) => {
@@ -183,7 +177,9 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
         </div>
         <br></br>
         <div>
-          {selectedTags.map((tag, index) => <p key={index}>{tag}</p>)}
+          {selectedTags.map((tag, index) => (
+            <p key={index}>{tag}</p>
+          ))}
         </div>
       </div>
       <div className="rightFreeTextContainer">
