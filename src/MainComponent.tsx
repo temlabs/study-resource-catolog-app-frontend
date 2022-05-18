@@ -13,17 +13,22 @@ export default function MainComponent(props: UserProps): JSX.Element {
   const [studyList, setStudyList] = useState<ResourceProp[]>([]);
   const [allResourcesList, setAllResourcesList] = useState<ResourceProp[]>([]);
   const [displayList, setDisplayList] = useState<ResourceProp[]>([]);
-  const [likeTrigger, setLikeTrigger] = useState<boolean>(false)
-  const [studyListTrigger, setStudyListTrigger] = useState<boolean>(false)
+  const [likeTrigger, setLikeTrigger] = useState<boolean>(false);
+  const [studyListTrigger, setStudyListTrigger] = useState<boolean>(false);
 
   // fetch the necessary data once only
+  
   useEffect(() => {
     const getContentTypes = async () => {
-      const contentTypesData = await axios.get(`${baseUrl}/content-type`);
-      const contentTypeNames = (contentTypesData.data as ContentType[]).map(
-        (ct) => ct.content_name
-      );
-      setContentTypes(contentTypeNames);
+      try {
+        const contentTypesData = await axios.get(`${baseUrl}/content-type`);
+        const contentTypeNames = (contentTypesData.data as ContentType[]).map(
+          (ct) => ct.content_name
+        );
+        setContentTypes(contentTypeNames);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     const getAllTags = async () => {
@@ -33,11 +38,9 @@ export default function MainComponent(props: UserProps): JSX.Element {
           (tag) => tag.tag_name
         );
         setAllTags(allTagNames);
-        
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
-        
     };
 
     const getResourceList = async () => {
@@ -65,8 +68,6 @@ export default function MainComponent(props: UserProps): JSX.Element {
     getStudyList();
   }, [props.user_id, studyListTrigger]);
 
-  
-
   return (
     <>
       <Newresource
@@ -91,13 +92,16 @@ export default function MainComponent(props: UserProps): JSX.Element {
         }`}
       </p>
       {displayList.map((resource, ix) => (
-        <div key={ix} >
-        <ResourceCard key={ix} resource={resource} user={props}
-          likeTrigger={likeTrigger}
-          setLikeTrigger={setLikeTrigger}
-          studyListTrigger={studyListTrigger}
-          setStudyListTrigger={setStudyListTrigger}
-        />
+        <div key={ix}>
+          <ResourceCard
+            key={ix}
+            resource={resource}
+            user={props}
+            likeTrigger={likeTrigger}
+            setLikeTrigger={setLikeTrigger}
+            studyListTrigger={studyListTrigger}
+            setStudyListTrigger={setStudyListTrigger}
+          />
         </div>
       ))}
     </>
