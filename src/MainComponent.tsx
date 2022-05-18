@@ -13,6 +13,8 @@ export default function MainComponent(props: UserProps): JSX.Element {
   const [studyList, setStudyList] = useState<ResourceProp[]>([]);
   const [allResourcesList, setAllResourcesList] = useState<ResourceProp[]>([]);
   const [displayList, setDisplayList] = useState<ResourceProp[]>([]);
+  const [likeTrigger, setLikeTrigger] = useState<boolean>(false)
+  const [studyListTrigger, setStudyListTrigger] = useState<boolean>(false)
 
   // fetch the necessary data once only
   useEffect(() => {
@@ -41,7 +43,7 @@ export default function MainComponent(props: UserProps): JSX.Element {
     getContentTypes();
     getAllTags();
     getResourceList();
-  }, [props.user_id]);
+  }, [props.user_id, likeTrigger]);
 
   // fetch study list whenever user id is changed
   useEffect(() => {
@@ -55,7 +57,9 @@ export default function MainComponent(props: UserProps): JSX.Element {
     };
 
     getStudyList();
-  }, [props.user_id]);
+  }, [props.user_id, studyListTrigger]);
+
+  
 
   return (
     <>
@@ -81,7 +85,14 @@ export default function MainComponent(props: UserProps): JSX.Element {
         }`}
       </p>
       {displayList.map((resource, ix) => (
-        <ResourceCard key={ix} resource={resource} user={props} />
+        <div key={ix} >
+        <ResourceCard key={ix} resource={resource} user={props}
+          likeTrigger={likeTrigger}
+          setLikeTrigger={setLikeTrigger}
+          studyListTrigger={studyListTrigger}
+          setStudyListTrigger={setStudyListTrigger}
+        />
+        </div>
       ))}
     </>
   );
