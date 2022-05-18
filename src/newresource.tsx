@@ -21,21 +21,16 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
     setResource(Object.assign(resource, { user_id: props.user_id }));
   }, [props.user_id, resource]);
 
-  const [tags, setTags] = useState([]);
-  const [selectedTags, setSelectedTags] = useState([]);
+
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedNature, setSelectedNature] = useState("");
 
-  const handleGetTags = () => {
-    fetch(`${baseUrl}/tags`)
-      .then((response) => response.json())
-      .then((jsonBody) => setTags(jsonBody));
-  };
 
   const handleAddTag = (value: string) => {
-    setSelectedTags((prevSelectedTags) => ({
+    setSelectedTags((prevSelectedTags) => [
       ...prevSelectedTags,
       value,
-    }));
+    ]);
   };
 
   const handleChange = (event: { target: { name: string; value: string } }) => {
@@ -159,7 +154,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
         </div>
         <br></br>
         <br></br>
-        <div className="tagdown" onClick={handleGetTags}>
+        <div className="tagdown">
           <button
             className="btn btn-secondary dropdown-toggle"
             type="button"
@@ -173,21 +168,23 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
             className="dropdown-menu btn btn-info"
             aria-labelledby="dropdownMenuButton1"
           >
-            {tags.map((tag) => {
+            {props.tags.map((tag, index) => {
               return (
                 <li
-                  className="dropdown-tags"
-                  onClick={(e) => handleAddTag(tag["tag_name"])}
-                  key={tag["tag_name"]}
+                  className="dropdown-tags dropdown-item"
+                  onClick={(e) => handleAddTag(tag)}
+                  key={index}
                 >
-                  {tag["tag_name"]}
+                  {tag}
                 </li>
               );
             })}
           </ul>
         </div>
         <br></br>
-        <p>Tags:{selectedTags}</p>
+        <div>
+          {selectedTags.map((tag, index) => <p key={index}>{tag}</p>)}
+        </div>
       </div>
       <div className="rightFreeTextContainer">
         <textarea
