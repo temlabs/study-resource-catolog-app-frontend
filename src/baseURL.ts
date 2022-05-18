@@ -1,4 +1,4 @@
 export const baseUrl =
   process.env.NODE_ENV === "production"
-    ? "https://pastebins-server.herokuapp.com"
+    ? "https://study-resource-catalog-backend.herokuapp.com"
     : "http://localhost:4000";
