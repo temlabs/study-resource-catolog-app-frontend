@@ -10,42 +10,41 @@ html {
   display: flex;
   flex-direction: row;
   padding: 0% 12.5%;
-  background-color: #F3FFF4;
-  border: solid 10px  rgb(232, 244, 232);
+  background-color: #f3fff4;
+  border: solid 10px rgb(232, 244, 232);
 }
- .header--title{
+.header--title {
   margin: 2.5% 3%;
   font-size: 1.5vw;
-  background-color: #F3FFF4;
-
-} 
-.dropdown--box{
+  background-color: #f3fff4;
+}
+.dropdown--box {
   margin-left: auto;
   margin-right: 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.dropdown-comment{
+.dropdown-comment {
   margin: auto 10px;
   font-size: 1vw;
 }
-.btn btn-secondary dropdown-toggle{
+.btn btn-secondary dropdown-toggle {
   margin: auto 10px;
 }
 
-.new--resource{
+.new--resource {
   background-color: rgb(232, 244, 232);
 }
-.resource--card{
+.resource--card {
   display: flex;
   flex-direction: row;
   font-size: 1.25vw;
   width: 60%;
   margin: 2% auto;
-  background-color: #F3FFF4;
+  background-color: #f3fff4;
 }
-.nr--title{ 
+.nr--title {
   width: 75%;
   margin: 0 auto;
   padding: 2% 2%;
@@ -58,19 +57,19 @@ html {
   display: flex;
   flex-direction: column;
 }
-.leftContainer{
+.leftContainer {
   margin: 2% auto;
   padding: 10px;
 }
-.nr--input{
+.nr--input {
   width: 95%;
   margin: 2% 0%;
   background-color: rgb(232, 244, 232);
 }
-.dropdown{
+.dropdown {
   margin: 0 10px;
 }
-.tagdown{
+.tagdown {
   margin: 0 auto;
 }
 .rightColumn {
@@ -88,7 +87,7 @@ html {
 }
 .freetextarea {
   width: 100%;
-  height: 100%; 
+  height: 100%;
   box-sizing: border-box;
 }
 .submit {
@@ -98,26 +97,24 @@ html {
   border-color: #6f8f71;
 }
 
-
-
-.flex-column{
+.flex-column {
   display: flex;
   flex-direction: column;
   background-color: #6f8f71;
 }
-.flex-row{
+.flex-row {
   display: flex;
   flex-direction: row;
 }
-.form-control{
+.form-control {
   width: 75%;
   margin: 2% 10%;
-  background-color: #F3FFF4;
-  border:solid 1px #6f8f71;
+  background-color: #f3fff4;
+  border: solid 1px #6f8f71;
 }
-.filter--dropdown{
+.filter--dropdown {
   margin: auto 5%;
 }
-.form-check-label{
-  border:solid 1px orange;
+.form-check-label {
+  border: solid 1px orange;
 }
