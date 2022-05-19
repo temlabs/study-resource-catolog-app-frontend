@@ -1,3 +1,7 @@
 .unselected {
   opacity: 0.5;
 }
+
+.selected-tag {
+  background-color: black;
+}

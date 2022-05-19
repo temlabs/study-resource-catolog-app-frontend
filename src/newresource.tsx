@@ -9,7 +9,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
     author_name: "",
     url: "",
     description: "",
-    tags: [""],
+    tags: [],
     content_name: "",
     build_stage: "",
     recommendation_nature: "",
@@ -23,8 +23,19 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedNature, setSelectedNature] = useState("");
 
-  const handleAddTag = (value: string) => {
-    setSelectedTags((prevSelectedTags) => [...prevSelectedTags, value]);
+  const handleAddTag = (value: string, listElement: HTMLLIElement) => {
+    const tagIndex = selectedTags.findIndex((t) => t === value);
+    const alreadySelected: boolean = tagIndex === -1 ? false : true;
+
+    if (alreadySelected) {
+      listElement.classList.remove("selected-tag");
+      const newSelectedTags = [...selectedTags];
+      newSelectedTags.splice(tagIndex, 1);
+      setSelectedTags(newSelectedTags);
+    } else {
+      listElement.classList.add("selected-tag");
+      setSelectedTags((prevSelectedTags) => [...prevSelectedTags, value]);
+    }
   };
 
   const handleChange = (event: { target: { name: string; value: string } }) => {
@@ -53,7 +64,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
         console.log("error", error);
       });
   };
-
+  console.log({ selectedTags });
   return (
     <div>
       <h3 className="title">Add new resource</h3>
@@ -166,8 +177,8 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
               return (
                 <li
                   className="dropdown-tags dropdown-item"
-                  onClick={(e) => handleAddTag(tag)}
-                  key={index}
+                  onClick={(e) => handleAddTag(tag, e.target as HTMLLIElement)}
+                  key={tag}
                 >
                   {tag}
                 </li>
@@ -177,8 +188,8 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
         </div>
         <br></br>
         <div>
-          {selectedTags.map((tag, index) => (
-            <p key={index}>{tag}</p>
+          {selectedTags.map((tag) => (
+            <p key={tag}>{tag}</p>
           ))}
         </div>
       </div>
