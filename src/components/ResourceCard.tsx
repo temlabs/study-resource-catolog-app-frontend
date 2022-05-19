@@ -175,10 +175,11 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
             key={props.resource.resource_id}
             className="btn btn-primary"
             data-bs-toggle="collapse"
-            href="#collapseExample"
+            //data-target='#multiCollapseExample'
+            href={`#collapse${props.resource.resource_id}`}
             role="button"
             aria-expanded="false"
-            aria-controls="collapseExample"
+            aria-controls="collapseExample2"
           >
             Show Comments
           </a>
@@ -189,7 +190,11 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
               {
                 comments.map((oneComment, ix) => {
                   return (
-                    <div key={ix} className="collapse" id="collapseExample">
+                    <div
+                      key={ix}
+                      className="collapse"
+                      id={`collapse${props.resource.resource_id}`}
+                    >
                       <div className="card card-body">
                         {oneComment.comment_text}
                       </div>
@@ -200,7 +205,10 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
               }
             </div>
           ) : (
-            <div className="collapse" id="collapseExample">
+            <div
+              className="collapse"
+              id={`#ollapse${props.resource.resource_id}`}
+            >
               <div className="card card-body">No Comments</div>
             </div>
           )}
