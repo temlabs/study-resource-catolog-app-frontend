@@ -21,10 +21,11 @@ export default function Header(props: HeaderProps): JSX.Element {
 
   return (
     <>
-      <h2>Study Buddy</h2>
-
+      <div className = "main--header">
+      <h2 className = "header--title">Study Buddy</h2>
+      <div className = "dropdown--box">
       {props.user.user_id === 0 ? (
-        <p>Please select User</p>
+        <p className = "dropdown-comment">Please select User</p>
       ) : (
         <p>Current User is {props.user.user_name}</p>
       )}
@@ -54,6 +55,8 @@ export default function Header(props: HeaderProps): JSX.Element {
             );
           })}
         </ul>
+      </div>
+      </div>
       </div>
     </>
   );

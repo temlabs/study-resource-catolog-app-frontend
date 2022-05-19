@@ -56,9 +56,13 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
 
   return (
     <div>
-      <h3 className="title">Add new resource</h3>
+      <div className="new--resource">
+              <h3 className="nr--title">Add new resource</h3>
+      <div className="resource--card">
+      <div className="leftColumn">
       <div className="leftContainer">
         <input
+          className="nr--input"
           value={resource.resource_name}
           name="resource_name"
           type="text"
@@ -67,6 +71,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
         />
         <br></br>
         <input
+          className="nr--input"
           value={resource.author_name}
           name="author_name"
           type="text"
@@ -75,6 +80,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
         />
         <br></br>
         <input
+          className="nr--input"
           value={resource.url}
           name="url"
           type="text"
@@ -83,6 +89,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
         />
         <br></br>
         <input
+          className="nr--input"
           value={resource.build_stage}
           name="build_stage"
           type="text"
@@ -90,14 +97,6 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
           onChange={handleChange}
         />
         <br></br>
-      </div>
-      <div className="rightFreeTextContainer">
-        <textarea
-          value={resource.description}
-          name="description"
-          placeholder="Description:"
-          onChange={handleChange}
-        />
       </div>
       <div className="leftContainer">
         <div className="dropdown">
@@ -182,17 +181,33 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
           ))}
         </div>
       </div>
+      </div>
+      <div className="rightColumn">
       <div className="rightFreeTextContainer">
         <textarea
+          className="freetextarea"
+          value={resource.description}
+          name="description"
+          placeholder="Description:"
+          onChange={handleChange}
+        />
+      </div>
+      <div className="rightFreeTextContainer">
+        <textarea
+          className="freetextarea"
           value={resource.recommendation_reason}
           name="recommendation_reason"
           placeholder="Recommendation Reason:"
           onChange={handleChange}
         />
       </div>
-      <button type="submit" onClick={handleClick}>
+      </div>
+    </div>    
+    <button className="submit" type="submit" onClick={handleClick}>
         Submit your resource!
-      </button>
+      </button>< br />
+    </div>
+
     </div>
   );
 }
