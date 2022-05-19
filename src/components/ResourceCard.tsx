@@ -25,6 +25,45 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
   const [comments, setComments] = useState<CommentsProps[]>([]);
   const [commentsTrigger, setCommentsTrigger] = useState<boolean>(false);
   const [newComment, setNewComment] = useState<string>("");
+  const [addedToStudyList, setAddedToStudyList] = useState<boolean>(false);
+
+  const deleteFromStudyList = async () => {
+    try {
+      if (props.user.user_id !== 0) {
+        const resourceRemovedFromStudyList = await axios.delete(
+          `${baseUrl}/study-list/${props.user.user_id}/${props.resource.resource_id}`
+        );
+        if (resourceRemovedFromStudyList.data.length === 1) {
+          window.alert(
+            `the resource: ${props.resource.resource_name} has been removed from your studyList`
+          );
+          console.log(resourceRemovedFromStudyList.data);
+          props.setStudyListTrigger(!props.studyListTrigger);
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    try {
+      const checkIfInStudyList = async () => {
+        if (props.user.user_id !== 0) {
+          const commentsData = await axios.get(
+            `${baseUrl}/study-list/${props.user.user_id}/${props.resource.resource_id}`
+          );
+          if (typeof commentsData.data !== "string") {
+            setAddedToStudyList(true);
+          }
+        }
+      };
+      checkIfInStudyList();
+    } catch (err) {
+      console.error(err);
+    }
+  }, [props.user.user_id, props.studyListTrigger, props.resource.resource_id]);
+
   const addToStudyList = () => {
     axios.post(`${baseUrl}/studylist`, {
       user_id: props.user.user_id,
@@ -113,13 +152,23 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
           </span>
           <span className="sr-only"></span>
         </button>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={addToStudyList}
-        >
-          Add to Study List <span className="badge badge-light"></span>
-        </button>
+        {addedToStudyList ? (
+          <button
+            type="button"
+            className="btn btn-warning"
+            onClick={deleteFromStudyList}
+          >
+            Remove From Study List <span className="badge badge-light"></span>
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={addToStudyList}
+          >
+            Add to Study List <span className="badge badge-light"></span>
+          </button>
+        )}
 
         <p>
           <a
