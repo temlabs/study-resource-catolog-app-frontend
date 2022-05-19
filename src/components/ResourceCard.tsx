@@ -1,6 +1,6 @@
 import axios from "axios";
-import { ResourceProp, UserProps } from "./utils/interfaces";
-import { baseUrl } from "./baseURL";
+import { ResourceProp, UserProps } from "../utils/interfaces";
+import { baseUrl } from "../utils/baseURL";
 import { useEffect, useState } from "react";
 
 interface ResourceCardProps {

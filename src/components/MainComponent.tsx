@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { baseUrl } from "./baseURL";
+import { baseUrl } from "../utils/baseURL";
 import FilterBar from "./FilterBar";
-import Newresource from "./newresource";
-import { UserProps, ContentType, Tag, ResourceProp } from "./utils/interfaces";
+import NewResource from "./NewResource";
+import { UserProps, ContentType, Tag, ResourceProp } from "../utils/interfaces";
 import ResourceCard from "./ResourceCard";
 
 export default function MainComponent(props: UserProps): JSX.Element {
@@ -70,7 +70,7 @@ export default function MainComponent(props: UserProps): JSX.Element {
 
   return (
     <>
-      <Newresource
+      <NewResource
         user_id={props.user_id}
         user_name={props.user_name}
         tags={allTags}

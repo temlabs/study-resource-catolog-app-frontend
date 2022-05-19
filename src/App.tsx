@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Header from "./Header";
-import MainComponent from "./MainComponent";
-import Footer from "./Footer";
+import Header from "./components/Header";
+import MainComponent from "./components/MainComponent";
+import Footer from "./components/Footer";
 import "./styles/style.css";
 
 export interface UserData {
