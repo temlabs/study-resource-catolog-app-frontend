@@ -93,7 +93,7 @@ export default function FilterBar({
           aria-describedby="basic-addon1"
         />
         {/* The select drop down to filter on content type */}
-        <div className="dropdown">
+        <div className="filter--dropdown">
           <button
             className="btn btn-secondary dropdown-toggle"
             type="button"

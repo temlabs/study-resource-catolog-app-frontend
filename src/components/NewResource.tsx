@@ -56,143 +56,161 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
 
   return (
     <div>
-      <h3 className="title">Add new resource</h3>
-      <div className="leftContainer">
-        <input
-          value={resource.resource_name}
-          name="resource_name"
-          type="text"
-          placeholder="Resource Name:"
-          onChange={handleChange}
-        />
-        <br></br>
-        <input
-          value={resource.author_name}
-          name="author_name"
-          type="text"
-          placeholder="Author Name:"
-          onChange={handleChange}
-        />
-        <br></br>
-        <input
-          value={resource.url}
-          name="url"
-          type="text"
-          placeholder="URL:"
-          onChange={handleChange}
-        />
-        <br></br>
-        <input
-          value={resource.build_stage}
-          name="build_stage"
-          type="text"
-          placeholder="Build Stage:"
-          onChange={handleChange}
-        />
-        <br></br>
-      </div>
-      <div className="rightFreeTextContainer">
-        <textarea
-          value={resource.description}
-          name="description"
-          placeholder="Description:"
-          onChange={handleChange}
-        />
-      </div>
-      <div className="leftContainer">
-        <div className="dropdown">
-          <button
-            className="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            data-bs-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            {selectedNature.length > 0
-              ? selectedNature
-              : "choose recommendation nature:"}
-          </button>
-          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li
-              className="dropdown-item"
-              onClick={() =>
-                setSelectedNature(
-                  "I recommend this resource after having used it"
-                )
-              }
-            >
-              Recommended
-            </li>
-            <li
-              className="dropdown-item"
-              onClick={() =>
-                setSelectedNature(
-                  "I do not recommend this resource, having used it"
-                )
-              }
-            >
-              Not recommended
-            </li>
-            <li
-              className="dropdown-item"
-              onClick={() =>
-                setSelectedNature(
-                  "I haven't used this resource but it looks promising"
-                )
-              }
-            >
-              Haven't used
-            </li>
-          </ul>
-        </div>
-        <br></br>
-        <br></br>
-        <div className="tagdown">
-          <button
-            className="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Tag selector
-          </button>
-          <ul
-            className="dropdown-menu btn btn-info"
-            aria-labelledby="dropdownMenuButton1"
-          >
-            {props.tags.map((tag, index) => {
-              return (
-                <li
-                  className="dropdown-tags dropdown-item"
-                  onClick={(e) => handleAddTag(tag)}
-                  key={index}
+      <div className="new--resource">
+        <h3 className="nr--title">Add new resource</h3>
+        <div className="resource--card">
+          <div className="leftColumn">
+            <div className="leftContainer">
+              <input
+                className="nr--input"
+                value={resource.resource_name}
+                name="resource_name"
+                type="text"
+                placeholder="Resource Name:"
+                onChange={handleChange}
+              />
+              <br></br>
+              <input
+                className="nr--input"
+                value={resource.author_name}
+                name="author_name"
+                type="text"
+                placeholder="Author Name:"
+                onChange={handleChange}
+              />
+              <br></br>
+              <input
+                className="nr--input"
+                value={resource.url}
+                name="url"
+                type="text"
+                placeholder="URL:"
+                onChange={handleChange}
+              />
+              <br></br>
+              <input
+                className="nr--input"
+                value={resource.build_stage}
+                name="build_stage"
+                type="text"
+                placeholder="Build Stage:"
+                onChange={handleChange}
+              />
+              <br></br>
+            </div>
+            <div className="leftContainer">
+              <div className="dropdown">
+                <button
+                  className="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
                 >
-                  {tag}
-                </li>
-              );
-            })}
-          </ul>
+                  {selectedNature.length > 0
+                    ? selectedNature
+                    : "choose recommendation nature:"}
+                </button>
+                <ul
+                  className="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  <li
+                    className="dropdown-item"
+                    onClick={() =>
+                      setSelectedNature(
+                        "I recommend this resource after having used it"
+                      )
+                    }
+                  >
+                    Recommended
+                  </li>
+                  <li
+                    className="dropdown-item"
+                    onClick={() =>
+                      setSelectedNature(
+                        "I do not recommend this resource, having used it"
+                      )
+                    }
+                  >
+                    Not recommended
+                  </li>
+                  <li
+                    className="dropdown-item"
+                    onClick={() =>
+                      setSelectedNature(
+                        "I haven't used this resource but it looks promising"
+                      )
+                    }
+                  >
+                    Haven't used
+                  </li>
+                </ul>
+              </div>
+              <br></br>
+              <br></br>
+              <div className="tagdown">
+                <button
+                  className="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Tag selector
+                </button>
+                <ul
+                  className="dropdown-menu btn btn-info"
+                  aria-labelledby="dropdownMenuButton1"
+                >
+                  {props.tags.map((tag, index) => {
+                    return (
+                      <li
+                        className="dropdown-tags dropdown-item"
+                        onClick={(e) => handleAddTag(tag)}
+                        key={index}
+                      >
+                        {tag}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+              <br></br>
+              <div>
+                {selectedTags.map((tag, index) => (
+                  <p key={index}>{tag}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="rightColumn">
+            <div className="rightFreeTextContainer">
+              <textarea
+                className="freetextarea"
+                value={resource.description}
+                name="description"
+                placeholder="Description:"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="rightFreeTextContainer">
+              <textarea
+                className="freetextarea"
+                value={resource.recommendation_reason}
+                name="recommendation_reason"
+                placeholder="Recommendation Reason:"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
         </div>
-        <br></br>
-        <div>
-          {selectedTags.map((tag, index) => (
-            <p key={index}>{tag}</p>
-          ))}
-        </div>
+        <button className="submit" type="submit" onClick={handleClick}>
+          Submit your resource!
+        </button>
+        <br />
       </div>
-      <div className="rightFreeTextContainer">
-        <textarea
-          value={resource.recommendation_reason}
-          name="recommendation_reason"
-          placeholder="Recommendation Reason:"
-          onChange={handleChange}
-        />
-      </div>
-      <button type="submit" onClick={handleClick}>
-        Submit your resource!
-      </button>
     </div>
   );
 }
