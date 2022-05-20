@@ -2,14 +2,22 @@ import { useEffect, useState } from "react";
 
 import { NewResourceProps, ResourcePost } from "../utils/interfaces";
 
-export default function Newresource(props: NewResourceProps): JSX.Element {
+
+
+
+export default function NewResource(props: NewResourceProps): JSX.Element {
+
   const [resource, setResource] = useState<ResourcePost>({
     user_id: props.user_id,
     resource_name: "",
     author_name: "",
     url: "",
     description: "",
+
     tags: [],
+
+
+
     content_name: "",
     build_stage: "",
     recommendation_nature: "",
@@ -22,6 +30,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedNature, setSelectedNature] = useState("");
+
 
   const handleAddTag = (value: string, listElement: HTMLLIElement) => {
     const tagIndex = selectedTags.findIndex((t) => t === value);
@@ -36,6 +45,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
       listElement.classList.add("selected-tag");
       setSelectedTags((prevSelectedTags) => [...prevSelectedTags, value]);
     }
+
   };
 
   const handleChange = (event: { target: { name: string; value: string } }) => {
@@ -64,6 +74,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
         console.log("error", error);
       });
   };
+
   console.log({ selectedTags });
   return (
     <div>
@@ -204,6 +215,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
       <button type="submit" onClick={handleClick}>
         Submit your resource!
       </button>
+        <br/>
     </div>
   );
 }
