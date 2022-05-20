@@ -4,6 +4,7 @@ import MainComponent from "./components/MainComponent";
 import Footer from "./components/Footer";
 import "./styles/style.css";
 
+
 export interface UserData {
   user_id: number;
   user_name: string;
