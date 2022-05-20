@@ -47,34 +47,37 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
   };
 
   const handleClick = () => {
+    const fieldsPopulated = validateResource();
     const requestOptions = {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(resource),
     };
-    fetch(
-      "https://study-resource-catalog-backend.herokuapp.com/resource",
-      requestOptions
-    )
-      .then((response) => {
-        if (response.status === 500) {
-          throw response;
-        }
-        return response.json();
-      })
-      .then((result) => {
-        console.log("success", result);
-      })
-      .catch(async (error) => {
-        if (error.status !== undefined) {
-          const responseBody = await error.json();
-          window.alert(
-            `${responseBody}. Please note that all fields are compulsory.`
-          );
-        } else {
-          window.alert(error);
-        }
-      });
+    if (fieldsPopulated) {
+      fetch(
+        "https://study-resource-catalog-backend.herokuapp.com/resource",
+        requestOptions
+      )
+        .then((response) => {
+          if (response.status === 500) {
+            throw response;
+          }
+          return response.json();
+        })
+        .then((result) => {
+          console.log("success", result);
+        })
+        .catch(async (error) => {
+          if (error.status !== undefined) {
+            const responseBody = await error.json();
+            window.alert(
+              `${responseBody}. Please note that all fields are compulsory.`
+            );
+          } else {
+            window.alert(error);
+          }
+        });
+    }
   };
 
   function validateResource(): boolean {
