@@ -10,7 +10,7 @@
  */
 import React, { useEffect, useState } from "react";
 import Tag from "./Tag";
-import { FilterBarProps, ResourceProp } from "./utils/interfaces";
+import { FilterBarProps, ResourceProp } from "../utils/interfaces";
 export default function FilterBar({
   userLoggedIn,
   unfilteredResourceList,
@@ -93,7 +93,7 @@ export default function FilterBar({
           aria-describedby="basic-addon1"
         />
         {/* The select drop down to filter on content type */}
-        <div className="dropdown">
+        <div className="filter--dropdown">
           <button
             className="btn btn-secondary dropdown-toggle"
             type="button"
