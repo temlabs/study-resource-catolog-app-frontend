@@ -60,10 +60,14 @@ export default function Header(props: HeaderProps): JSX.Element {
             </ul>
           </div>
         </div>
+        <button
+          type="button"
+          className="sign-outbutton"
+          onClick={handleSignOut}
+        >
+          Sign Out
+        </button>
       </div>
-      <button type="button" className="btn btn-warning" onClick={handleSignOut}>
-        Sign Out
-      </button>
     </>
   );
 }

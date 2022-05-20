@@ -6,8 +6,6 @@ html {
   opacity: 0.5;
 }
 
-2
-
 .selected-tag {
   background-color: black;
 }
@@ -36,6 +34,10 @@ html {
   font-size: 1vw;
 }
 .btn btn-secondary dropdown-toggle {
+  margin: auto 10px;
+}
+.sign-outbutton {
+  height: 50%;
   margin: auto 10px;
 }
 
