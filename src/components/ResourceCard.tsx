@@ -1,6 +1,6 @@
 import axios from "axios";
-import { ResourceProp, UserProps } from "./utils/interfaces";
-import { baseUrl } from "./baseURL";
+import { ResourceProp, UserProps } from "../utils/interfaces";
+import { baseUrl } from "../utils/baseURL";
 import { useEffect, useState } from "react";
 
 interface ResourceCardProps {
@@ -25,6 +25,45 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
   const [comments, setComments] = useState<CommentsProps[]>([]);
   const [commentsTrigger, setCommentsTrigger] = useState<boolean>(false);
   const [newComment, setNewComment] = useState<string>("");
+  const [addedToStudyList, setAddedToStudyList] = useState<boolean>(false);
+
+  const deleteFromStudyList = async () => {
+    try {
+      if (props.user.user_id !== 0) {
+        const resourceRemovedFromStudyList = await axios.delete(
+          `${baseUrl}/study-list/${props.user.user_id}/${props.resource.resource_id}`
+        );
+        if (resourceRemovedFromStudyList.data.length === 1) {
+          window.alert(
+            `the resource: ${props.resource.resource_name} has been removed from your studyList`
+          );
+          console.log(resourceRemovedFromStudyList.data);
+          props.setStudyListTrigger(!props.studyListTrigger);
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    try {
+      const checkIfInStudyList = async () => {
+        if (props.user.user_id !== 0) {
+          const commentsData = await axios.get(
+            `${baseUrl}/study-list/${props.user.user_id}/${props.resource.resource_id}`
+          );
+          if (typeof commentsData.data !== "string") {
+            setAddedToStudyList(true);
+          }
+        }
+      };
+      checkIfInStudyList();
+    } catch (err) {
+      console.error(err);
+    }
+  }, [props.user.user_id, props.studyListTrigger, props.resource.resource_id]);
+
   const addToStudyList = () => {
     axios.post(`${baseUrl}/studylist`, {
       user_id: props.user.user_id,
@@ -113,23 +152,34 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
           </span>
           <span className="sr-only"></span>
         </button>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={addToStudyList}
-        >
-          Add to Study List <span className="badge badge-light"></span>
-        </button>
+        {addedToStudyList ? (
+          <button
+            type="button"
+            className="btn btn-warning"
+            onClick={deleteFromStudyList}
+          >
+            Remove From Study List <span className="badge badge-light"></span>
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={addToStudyList}
+          >
+            Add to Study List <span className="badge badge-light"></span>
+          </button>
+        )}
 
         <p>
           <a
             key={props.resource.resource_id}
             className="btn btn-primary"
             data-bs-toggle="collapse"
-            href="#collapseExample"
+            //data-target='#multiCollapseExample'
+            href={`#collapse${props.resource.resource_id}`}
             role="button"
             aria-expanded="false"
-            aria-controls="collapseExample"
+            aria-controls="collapseExample2"
           >
             Show Comments
           </a>
@@ -140,7 +190,11 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
               {
                 comments.map((oneComment, ix) => {
                   return (
-                    <div key={ix} className="collapse" id="collapseExample">
+                    <div
+                      key={ix}
+                      className="collapse"
+                      id={`collapse${props.resource.resource_id}`}
+                    >
                       <div className="card card-body">
                         {oneComment.comment_text}
                       </div>
@@ -151,7 +205,10 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
               }
             </div>
           ) : (
-            <div className="collapse" id="collapseExample">
+            <div
+              className="collapse"
+              id={`#ollapse${props.resource.resource_id}`}
+            >
               <div className="card card-body">No Comments</div>
             </div>
           )}
