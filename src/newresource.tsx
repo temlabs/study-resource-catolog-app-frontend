@@ -48,7 +48,7 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
 
   const handleClick = () => {
     if (!validateResource()) {
-      return
+      return;
     }
     const requestOptions = {
       method: "POST",
@@ -62,19 +62,21 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
     )
       .then((response) => {
         if (response.status === 500) {
-          throw (response)
+          throw response;
         }
-        return response.json()
+        return response.json();
       })
       .then((result) => {
         console.log("success", result);
       })
       .catch(async (error) => {
         if (error.status !== undefined) {
-          const responseBody = await error.json()
-          window.alert(`${responseBody}. Please note that all fields are compulsory.`)
+          const responseBody = await error.json();
+          window.alert(
+            `${responseBody}. Please note that all fields are compulsory.`
+          );
         } else {
-          window.alert(error)
+          window.alert(error);
         }
       });
   };
@@ -85,15 +87,17 @@ export default function Newresource(props: NewResourceProps): JSX.Element {
     const urlNotBlank = resource.url.length > 0;
     const atLeastOneTag = selectedTags.length > 0;
 
-    const allChecksMet = resourceNameNotBlank && authorNameNotBlank && urlNotBlank && atLeastOneTag
+    const allChecksMet =
+      resourceNameNotBlank &&
+      authorNameNotBlank &&
+      urlNotBlank &&
+      atLeastOneTag;
     if (!allChecksMet) {
-      window.alert("All fields are mandatory")
-      return false
+      window.alert("All fields are mandatory");
+      return false;
     }
-    return true
-
+    return true;
   }
-
 
   return (
     <div>
