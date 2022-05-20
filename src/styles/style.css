@@ -6,6 +6,12 @@ html {
   opacity: 0.5;
 }
 
+2
+
+.selected-tag {
+  background-color: black;
+}
+
 .main--header {
   display: flex;
   flex-direction: row;
