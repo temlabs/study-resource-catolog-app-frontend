@@ -56,14 +56,44 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
       "https://study-resource-catalog-backend.herokuapp.com/resource",
       requestOptions
     )
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 500) {
+          throw response;
+        }
+        return response.json();
+      })
       .then((result) => {
         console.log("success", result);
       })
-      .catch((error) => {
-        console.log("error", error);
+      .catch(async (error) => {
+        if (error.status !== undefined) {
+          const responseBody = await error.json();
+          window.alert(
+            `${responseBody}. Please note that all fields are compulsory.`
+          );
+        } else {
+          window.alert(error);
+        }
       });
   };
+
+  function validateResource(): boolean {
+    const resourceNameNotBlank = resource.resource_name.length > 0;
+    const authorNameNotBlank = resource.author_name.length > 0;
+    const urlNotBlank = resource.url.length > 0;
+    const atLeastOneTag = selectedTags.length > 0;
+
+    const allChecksMet =
+      resourceNameNotBlank &&
+      authorNameNotBlank &&
+      urlNotBlank &&
+      atLeastOneTag;
+    if (!allChecksMet) {
+      window.alert("All fields are mandatory");
+      return false;
+    }
+    return true;
+  }
 
   console.log({ selectedTags });
   return (
