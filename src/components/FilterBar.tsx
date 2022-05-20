@@ -10,7 +10,7 @@
  */
 import React, { useEffect, useState } from "react";
 import Tag from "./Tag";
-import { FilterBarProps, ResourceProp } from "./utils/interfaces";
+import { FilterBarProps, ResourceProp } from "../utils/interfaces";
 export default function FilterBar({
   userLoggedIn,
   unfilteredResourceList,

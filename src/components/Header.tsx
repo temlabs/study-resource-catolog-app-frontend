@@ -1,5 +1,5 @@
-import { UserData } from "./App";
-import { baseUrl } from "./baseURL";
+import { UserData } from "../App";
+import { baseUrl } from "../utils/baseURL";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -10,6 +10,9 @@ interface HeaderProps {
 
 export default function Header(props: HeaderProps): JSX.Element {
   const [allUsers, setAllUsers] = useState<UserData[]>([]);
+  const handleSignOut = () => {
+    props.setUser({ user_id: 0, user_name: "", is_faculty: false });
+  };
 
   useEffect(() => {
     const getAllUsers = async () => {
@@ -58,6 +61,9 @@ export default function Header(props: HeaderProps): JSX.Element {
           </div>
         </div>
       </div>
+      <button type="button" className="btn btn-warning" onClick={handleSignOut}>
+        Sign Out
+      </button>
     </>
   );
 }

@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { baseUrl } from "./baseURL";
+import { baseUrl } from "../utils/baseURL";
 import FilterBar from "./FilterBar";
-import Newresource from "./newresource";
-import { UserProps, ContentType, Tag, ResourceProp } from "./utils/interfaces";
+import NewResource from "./NewResource";
+import { UserProps, ContentType, Tag, ResourceProp } from "../utils/interfaces";
 import ResourceCard from "./ResourceCard";
 
 export default function MainComponent(props: UserProps): JSX.Element {
@@ -13,23 +13,34 @@ export default function MainComponent(props: UserProps): JSX.Element {
   const [studyList, setStudyList] = useState<ResourceProp[]>([]);
   const [allResourcesList, setAllResourcesList] = useState<ResourceProp[]>([]);
   const [displayList, setDisplayList] = useState<ResourceProp[]>([]);
+  const [likeTrigger, setLikeTrigger] = useState<boolean>(false);
+  const [studyListTrigger, setStudyListTrigger] = useState<boolean>(false);
 
   // fetch the necessary data once only
+
   useEffect(() => {
     const getContentTypes = async () => {
-      const contentTypesData = await axios.get(`${baseUrl}/content-type`);
-      const contentTypeNames = (contentTypesData.data as ContentType[]).map(
-        (ct) => ct.content_name
-      );
-      setContentTypes(contentTypeNames);
+      try {
+        const contentTypesData = await axios.get(`${baseUrl}/content-type`);
+        const contentTypeNames = (contentTypesData.data as ContentType[]).map(
+          (ct) => ct.content_name
+        );
+        setContentTypes(contentTypeNames);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     const getAllTags = async () => {
-      const contentTypesData = await axios.get(`${baseUrl}/tags`);
-      const allTagNames = (contentTypesData.data as Tag[]).map(
-        (tag) => tag.tag_name
-      );
-      setAllTags(allTagNames);
+      try {
+        const contentTypesData = await axios.get(`${baseUrl}/tags`);
+        const allTagNames = (contentTypesData.data as Tag[]).map(
+          (tag) => tag.tag_name
+        );
+        setAllTags(allTagNames);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     const getResourceList = async () => {
@@ -41,7 +52,7 @@ export default function MainComponent(props: UserProps): JSX.Element {
     getContentTypes();
     getAllTags();
     getResourceList();
-  }, [props.user_id]);
+  }, [props.user_id, likeTrigger]);
 
   // fetch study list whenever user id is changed
   useEffect(() => {
@@ -55,11 +66,11 @@ export default function MainComponent(props: UserProps): JSX.Element {
     };
 
     getStudyList();
-  }, [props.user_id]);
+  }, [props.user_id, studyListTrigger]);
 
   return (
     <>
-      <Newresource
+      <NewResource
         user_id={props.user_id}
         user_name={props.user_name}
         tags={allTags}
@@ -81,7 +92,17 @@ export default function MainComponent(props: UserProps): JSX.Element {
         }`}
       </p>
       {displayList.map((resource, ix) => (
-        <ResourceCard key={ix} resource={resource} user={props} />
+        <div key={ix}>
+          <ResourceCard
+            key={ix}
+            resource={resource}
+            user={props}
+            likeTrigger={likeTrigger}
+            setLikeTrigger={setLikeTrigger}
+            studyListTrigger={studyListTrigger}
+            setStudyListTrigger={setStudyListTrigger}
+          />
+        </div>
       ))}
     </>
   );

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-import { NewResourceProps, ResourcePost } from "./utils/interfaces";
+import { NewResourceProps, ResourcePost } from "../utils/interfaces";
 
-export default function Newresource(props: NewResourceProps): JSX.Element {
+export default function NewResource(props: NewResourceProps): JSX.Element {
   const [resource, setResource] = useState<ResourcePost>({
     user_id: props.user_id,
     resource_name: "",
