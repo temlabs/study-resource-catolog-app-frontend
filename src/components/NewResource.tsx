@@ -135,6 +135,15 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
               <br></br>
               <input
                 className="nr--input"
+                value={resource.content_name}
+                name="content_type"
+                type="text"
+                placeholder="Content Type:"
+                onChange={handleChange}
+              />
+              <br></br>
+              <input
+                className="nr--input"
                 value={resource.build_stage}
                 name="build_stage"
                 type="text"
