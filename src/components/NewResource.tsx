@@ -142,6 +142,7 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
                 type="text"
                 placeholder="Content Type:"
                 onChange={handleChange}
+                disabled={!props.userLoggedIn}
               />
               <br></br>
               <input

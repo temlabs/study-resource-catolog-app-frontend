@@ -129,7 +129,7 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
               Posted by: {props.resource.user_name}
             </h6>
             <h6 className="card-subtitle mb-2 text-muted">
-              Post date: {props.resource.post_date}
+              Post date: {props.resource.post_date?.split("T")[0]}
             </h6>
           </div>
 
@@ -148,10 +148,10 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
             </span>
             {props.resource.tags
               ? props.resource.tags.split(",").map((tag, ix) => (
-                  <span key={ix} className="badge text-bg-success">
-                    {tag}
-                  </span>
-                ))
+                <span key={ix} className="badge text-bg-success">
+                  {tag}
+                </span>
+              ))
               : "No tags"}
             <span className="badge text-bg-warning">
               {props.resource.build_stage}
