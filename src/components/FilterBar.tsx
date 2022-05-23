@@ -8,7 +8,7 @@
  *
  *
  */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Tag from "./Tag";
 import { FilterBarProps, ResourceProp } from "../utils/interfaces";
 export default function FilterBar({
@@ -24,6 +24,8 @@ export default function FilterBar({
   const [searchInputText, setSearchInputText] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedContentType, setSelectedContentType] = useState<string>("");
+  const [studyListOn, setStudyListOn] = useState<boolean | undefined>(false);
+  const studyListToggleRef = useRef<HTMLInputElement>(null);
   function addOrRemoveTag(tagName: string, tagElement: HTMLElement) {
     const isSelected: boolean = selectedTags.includes(tagName);
     if (isSelected) {
@@ -75,9 +77,17 @@ export default function FilterBar({
       );
       setDisplayList(filteredList);
     }
-    studyListShowing
-      ? filterListOfResources(unfilteredStudyList)
-      : filterListOfResources(unfilteredResourceList);
+
+    if (userLoggedIn) {
+      setStudyListOn(undefined);
+      studyListShowing
+        ? filterListOfResources(unfilteredStudyList)
+        : filterListOfResources(unfilteredResourceList);
+    } else {
+      setStudyListOn(false);
+      setStudyListShowing(false);
+      setDisplayList(unfilteredResourceList);
+    }
   }, [
     selectedContentType,
     searchInputText,
@@ -86,7 +96,10 @@ export default function FilterBar({
     unfilteredResourceList,
     unfilteredStudyList,
     setDisplayList,
+    setStudyListShowing,
+    userLoggedIn,
   ]);
+
   return (
     <section className="flex-column">
       <div key="filters" className="flex-row">
@@ -145,7 +158,9 @@ export default function FilterBar({
             type="checkbox"
             role="switch"
             id="flexSwitchCheckDefault"
+            ref={studyListToggleRef}
             disabled={!userLoggedIn}
+            checked={studyListOn}
           />
           <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
             Show study list
