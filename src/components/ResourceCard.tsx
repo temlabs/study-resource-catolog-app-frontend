@@ -39,6 +39,7 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
           );
           console.log(resourceRemovedFromStudyList.data);
           props.setStudyListTrigger(!props.studyListTrigger);
+          setAddedToStudyList(false);
         }
       }
     } catch (err) {
@@ -70,6 +71,7 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
       resource_id: props.resource.resource_id,
     });
     props.setStudyListTrigger(!props.studyListTrigger);
+    setAddedToStudyList(true);
   };
   const addLike = () => {
     axios.post(`${baseUrl}/reaction`, {
@@ -119,9 +121,17 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
       <div className="card-body">
         <h5 className="card-title">{props.resource.resource_name}</h5>
         <div className="card-body-mid">
-          <h6 className="card-subtitle mb-2 text-muted">
-            Author: {props.resource.author_name}
-          </h6>
+          <div className="card-resource-info">
+            <h6 className="card-subtitle mb-2 text-muted">
+              Author: {props.resource.author_name}
+            </h6>
+            <h6 className="card-subtitle mb-2 text-muted">
+              Posted by: {props.resource.user_name}
+            </h6>
+            <h6 className="card-subtitle mb-2 text-muted">
+              Post date: {props.resource.post_date}
+            </h6>
+          </div>
 
           <a href={props.resource.url} className="card-link">
             {props.resource.url}
@@ -149,96 +159,109 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
           </div>
         </div>
         <div className="card-body-foot">
-          <div className="card-footer-buttons">
-            <button type="button" className="btn btn-success" onClick={addLike}>
-              Likes{" "}
-              <span className="badge badge-light">
-                {props.resource.upvote_reaction}
-              </span>
-              <span className="sr-only"></span>
-            </button>
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={addDislike}
-            >
-              Dislikes{" "}
-              <span className="badge badge-light">
-                {props.resource.downvote_reaction}
-              </span>
-              <span className="sr-only"></span>
-            </button>
-            <div className="studylist-button">
-              {addedToStudyList ? (
-                <button
-                  type="button"
-                  className="btn btn-warning"
-                  onClick={deleteFromStudyList}
-                >
-                  Remove From Study List{" "}
-                  <span className="badge badge-light"></span>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={addToStudyList}
-                >
-                  Add to Study List <span className="badge badge-light"></span>
-                </button>
-              )}
-            </div>
-          </div>
-          <p>
-            <a
-              key={props.resource.resource_id}
-              className="btn btn-info"
-              data-bs-toggle="collapse"
-              //data-target='#multiCollapseExample'
-              href={`#collapse${props.resource.resource_id}`}
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapseExample2"
-            >
-              Show Comments
-            </a>
-          </p>
-
-          <div key={props.resource.resource_id}>
-            {comments.length > 0 ? (
-              <div>
-                {
-                  comments.map((oneComment, ix) => {
-                    return (
-                      <div
-                        key={ix}
-                        className="collapse"
-                        id={`collapse${props.resource.resource_id}`}
-                      >
-                        <div className="card card-body">
-                          {oneComment.comment_text}
-                        </div>
-                      </div>
-                    );
-                  })
-                  // <input />
-                }
-              </div>
-            ) : (
-              <div
-                className="collapse"
-                id={`#ollapse${props.resource.resource_id}`}
+          <div className="interaction-buttons">
+            <div className="card-footer-buttons-reactions">
+              <button
+                type="button"
+                className="btn btn-success"
+                onClick={addLike}
               >
-                <div className="card card-body">No Comments</div>
-              </div>
+                Likes{" "}
+                <span className="badge badge-light">
+                  {props.resource.upvote_reaction}
+                </span>
+                <span className="sr-only"></span>
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={addDislike}
+              >
+                Dislikes{" "}
+                <span className="badge badge-light">
+                  {props.resource.downvote_reaction}
+                </span>
+                <span className="sr-only"></span>
+              </button>
+            </div>
+            {addedToStudyList ? (
+              <button
+                type="button"
+                className="btn btn-warning"
+                onClick={deleteFromStudyList}
+              >
+                Remove From Study List{" "}
+                <span className="badge badge-light"></span>
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={addToStudyList}
+              >
+                Add to Study List <span className="badge badge-light"></span>
+              </button>
             )}
           </div>
-          <input
-            placeholder="Add Comment"
-            onChange={(e) => setNewComment(e.target.value)}
-            value={newComment}
-          />
-          <button onClick={() => postComment(newComment)}>submit</button>
+
+          <div className="comments-button-and-input">
+            <p>
+              <a
+                key={props.resource.resource_id}
+                className="btn btn-info"
+                data-bs-toggle="collapse"
+                //data-target='#multiCollapseExample'
+                href={`#collapse${props.resource.resource_id}`}
+                role="button"
+                aria-expanded="false"
+                aria-controls="collapseExample2"
+              >
+                Show Comments
+              </a>
+            </p>
+
+            <div key={props.resource.resource_id}>
+              {comments.length > 0 ? (
+                <div>
+                  {
+                    comments.map((oneComment, ix) => {
+                      return (
+                        <div
+                          key={ix}
+                          className="collapse"
+                          id={`collapse${props.resource.resource_id}`}
+                        >
+                          <div className="card card-body">
+                            {oneComment.comment_text}
+                          </div>
+                        </div>
+                      );
+                    })
+                    // <input />
+                  }
+                </div>
+              ) : (
+                <div
+                  className="collapse"
+                  id={`collapse${props.resource.resource_id}`}
+                >
+                  <div className="card card-body">No Comments</div>
+                </div>
+              )}
+            </div>
+            <input
+              placeholder="Add Comment"
+              className="add-comment"
+              onChange={(e) => setNewComment(e.target.value)}
+              value={newComment}
+            />
+            <button
+              className="btn btn-light"
+              onClick={() => postComment(newComment)}
+            >
+              submit
+            </button>
+          </div>
         </div>
       </div>
     </div>
