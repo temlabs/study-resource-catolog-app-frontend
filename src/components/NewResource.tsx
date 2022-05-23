@@ -98,7 +98,6 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
     return true;
   }
 
-  console.log({ selectedTags });
   return (
     <div>
       <div className="new--resource">
@@ -113,6 +112,7 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
                 type="text"
                 placeholder="Resource Name:"
                 onChange={handleChange}
+                disabled={!props.userLoggedIn}
               />
               <br></br>
               <input
@@ -122,6 +122,7 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
                 type="text"
                 placeholder="Author Name:"
                 onChange={handleChange}
+                disabled={!props.userLoggedIn}
               />
               <br></br>
               <input
@@ -131,6 +132,7 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
                 type="text"
                 placeholder="URL:"
                 onChange={handleChange}
+                disabled={!props.userLoggedIn}
               />
               <br></br>
               <input
@@ -149,6 +151,7 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
                 type="text"
                 placeholder="Build Stage:"
                 onChange={handleChange}
+                disabled={!props.userLoggedIn}
               />
               <br></br>
             </div>
@@ -161,6 +164,7 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
                   data-bs-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
+                  disabled={!props.userLoggedIn}
                 >
                   {selectedNature.length > 0
                     ? selectedNature
@@ -211,6 +215,7 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
                   id="dropdownMenuButton1"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
+                  disabled={!props.userLoggedIn}
                 >
                   Tag selector
                 </button>
@@ -250,6 +255,7 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
                 name="description"
                 placeholder="Description:"
                 onChange={handleChange}
+                disabled={!props.userLoggedIn}
               />
             </div>
 
@@ -260,9 +266,14 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
                 name="recommendation_reason"
                 placeholder="Recommendation Reason:"
                 onChange={handleChange}
+                disabled={!props.userLoggedIn}
               />
             </div>
-            <button type="submit" onClick={handleClick}>
+            <button
+              type="submit"
+              onClick={handleClick}
+              disabled={!props.userLoggedIn}
+            >
               Submit your resource!
             </button>
             <br />
