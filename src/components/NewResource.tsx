@@ -255,6 +255,7 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
 
             <div className="rightFreeTextContainer">
               <textarea
+                className="freetextarea"
                 value={resource.recommendation_reason}
                 name="recommendation_reason"
                 placeholder="Recommendation Reason:"
