@@ -42,12 +42,20 @@ export default function FilterBar({
   }
   useEffect(() => {
     function filterListOfResources(list: ResourceProp[]) {
-      //list = studyListShowing ? unfilteredStudyList : unfilteredResourceList
-      console.log({ searchInputText });
       const searchTextRegex = new RegExp(searchInputText);
       // predicate functions
-      const meetsSearchTextCriteria = (resourceName: string) =>
-        searchInputText.length > 0 ? searchTextRegex.test(resourceName) : true;
+      const meetsSearchTextCriteria = (resource: ResourceProp) =>
+        searchInputText.length > 0
+          ? searchTextRegex.test(resource.resource_name) ||
+            searchTextRegex.test(resource.description) ||
+            searchTextRegex.test(resource.author_name)
+          : true;
+
+      const hasTagFoundInSearchText = (resource: ResourceProp) =>
+        resource.tags
+          ? resource.tags.split(",").some((t) => searchTextRegex.test(t))
+          : false;
+
       // default behaviour is that resources with at least one of the selected tags will show
       // if you want it so that only resources with ALL the selected tags show,
       // replace some with every
@@ -61,7 +69,7 @@ export default function FilterBar({
           : true;
       const filteredList = list.filter(
         (r) =>
-          meetsSearchTextCriteria(r.resource_name) &&
+          (meetsSearchTextCriteria(r) || hasTagFoundInSearchText(r)) &&
           meetsTagsCriteria(r.tags ? r.tags.split(",") : []) &&
           meetsContentTypeCriteria(r.content_name)
       );
