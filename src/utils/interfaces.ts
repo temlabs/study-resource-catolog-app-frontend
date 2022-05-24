@@ -5,6 +5,7 @@ export interface UserProps {
 
 export interface NewResourceProps extends UserProps {
   tags: string[];
+  userLoggedIn: boolean;
 }
 
 export interface ResourceProp {
