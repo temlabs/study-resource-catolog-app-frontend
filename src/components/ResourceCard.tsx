@@ -148,10 +148,10 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
             </span>
             {props.resource.tags
               ? props.resource.tags.split(",").map((tag, ix) => (
-                <span key={ix} className="badge text-bg-success">
-                  {tag}
-                </span>
-              ))
+                  <span key={ix} className="badge text-bg-success">
+                    {tag}
+                  </span>
+                ))
               : "No tags"}
             <span className="badge text-bg-warning">
               {props.resource.build_stage}

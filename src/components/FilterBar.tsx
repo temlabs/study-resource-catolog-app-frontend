@@ -49,8 +49,8 @@ export default function FilterBar({
       const meetsSearchTextCriteria = (resource: ResourceProp) =>
         searchInputText.length > 0
           ? searchTextRegex.test(resource.resource_name) ||
-          searchTextRegex.test(resource.description) ||
-          searchTextRegex.test(resource.author_name)
+            searchTextRegex.test(resource.description) ||
+            searchTextRegex.test(resource.author_name)
           : true;
 
       const hasTagFoundInSearchText = (resource: ResourceProp) =>
