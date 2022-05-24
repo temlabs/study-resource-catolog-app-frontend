@@ -16,6 +16,7 @@ export default function MainComponent(props: UserProps): JSX.Element {
   const [likeTrigger, setLikeTrigger] = useState<boolean>(false);
   const [studyListTrigger, setStudyListTrigger] = useState<boolean>(false);
 
+  const userLoggedIn = props.user_id === 0 ? false : true;
   // fetch the necessary data once only
 
   useEffect(() => {
@@ -71,12 +72,13 @@ export default function MainComponent(props: UserProps): JSX.Element {
   return (
     <>
       <NewResource
+        userLoggedIn={userLoggedIn}
         user_id={props.user_id}
         user_name={props.user_name}
         tags={allTags}
       />
       <FilterBar
-        userLoggedIn={props.user_id === 0 ? false : true}
+        userLoggedIn={userLoggedIn}
         unfilteredResourceList={allResourcesList}
         // setResourceList={setAllResourcesList}
         unfilteredStudyList={studyList}

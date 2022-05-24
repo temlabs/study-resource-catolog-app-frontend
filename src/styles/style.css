@@ -1,6 +1,32 @@
 html {
   background-color: #99b69b;
 }
+body {
+  background-color: #a0c0a2;
+}
+* {
+  box-sizing: border-box;
+}
+/* For mobile phones: */
+/* [class*="col-"] {
+  width: 100%;
+} */
+
+/* @media only screen and (min-width: 768px) { */
+/* For desktop: */
+/* .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+} */
 
 .unselected {
   opacity: 0.5;
@@ -26,7 +52,9 @@ html {
 
 .dropdown--box {
   margin-left: auto;
-  margin-right: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 5%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -38,12 +66,12 @@ html {
 }
 
 .btn btn-secondary dropdown-toggle {
-  margin: auto 10px;
+  margin: auto 5%;
 }
 
 .sign-outbutton {
   height: 50%;
-  margin: auto 10px;
+  margin: auto 5%;
 }
 
 .new--resource {
@@ -86,7 +114,7 @@ html {
 }
 
 .dropdown {
-  margin: 0 10px;
+  margin: 0 auto;
 }
 
 .tagdown {
@@ -145,4 +173,134 @@ html {
 
 .form-check-label {
   border: solid 1px orange;
+}
+.card {
+  width: 80%;
+  margin: 5% 10%;
+  border-radius: 25px;
+
+  background-color: #cce2cd;
+}
+
+.card-title {
+  /* font-family: “Playfair Display”, “Didot”, "Times New Roman", Times, serif; */
+  padding: 2ex;
+  margin: 0% 5%;
+  border-radius: 25px;
+  background-color: #b4cfb0;
+}
+
+.card-body-mid {
+  padding: 1ex;
+  margin: 1% 5.5%;
+  border-radius: 25px;
+  background-color: #94b49f;
+}
+.card-body-foot {
+  padding: 1ex;
+  margin: 1% 5.5%;
+
+  border-radius: 25px;
+  background-color: #87bd9a;
+}
+
+.card-resource-info {
+  width: 100%;
+  display: inline-flex;
+  justify-content: space-evenly;
+}
+
+.text-bg-primary {
+  margin: 5px;
+  color: #212529;
+  background-color: #38a3a5;
+}
+
+.text-bg-warning {
+  margin: 5px;
+  color: #212529;
+  background-color: #57cc99;
+}
+.text-bg-success {
+  margin: 5px;
+  color: #212529;
+  background-color: #80ed99;
+}
+.card-footer-buttons-reactions {
+  width: 100%;
+  /* justify-content: start; */
+  /* display: inline-flex; */
+}
+.interaction-buttons {
+  margin: auto;
+  width: 100%;
+  display: inline-flex;
+  justify-content: space-around;
+}
+.comments-button-and-input {
+  width: 80%;
+  margin: 5% 10%;
+  border-radius: 25px;
+}
+
+/*show comments btn*/
+.btn-info {
+  width: 100%;
+
+  margin: auto;
+  padding: 0, 0.2ex;
+  color: #212529;
+  background-color: #e0d8b0;
+  border-color: #e0d8b0;
+}
+/*add comment input*/
+.add-comment {
+  width: 90%;
+  height: 5ex;
+  margin: 2%, 15%;
+  background-color: rgb(232, 244, 232);
+}
+
+/*like btn*/
+.btn-success {
+  margin: auto;
+  padding: 0, 0.2ex;
+  color: #212529;
+  background-color: #92ba92;
+  border-color: #92ba92;
+}
+/*add to study list btn*/
+.btn-primary {
+  width: 25%;
+  margin: auto;
+  padding: 0, 0.2ex;
+  color: #212529;
+  background-color: #e5e3c9;
+  border-color: #e5e3c9;
+}
+/*remove from study list button*/
+.btn-warning {
+  width: 25%;
+  margin: auto;
+  padding: 0, 0.2ex;
+  color: #212529;
+  background-color: #e5e3c9;
+  border-color: #e5e3c9;
+}
+
+/*dislike btn*/
+.btn-danger {
+  margin: auto;
+  padding: 0, 0.5ex;
+  color: #212529;
+  background-color: #bb6464;
+  border-color: #bb6464;
+}
+/*submit button*/
+.btn-light {
+  margin: auto;
+
+  color: #212529;
+  background-color: #e0d8b0;
+  border-color: #e0d8b0;
 }
