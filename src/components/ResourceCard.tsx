@@ -10,6 +10,10 @@ interface ResourceCardProps {
   setLikeTrigger: React.Dispatch<React.SetStateAction<boolean>>;
   studyListTrigger: boolean;
   setStudyListTrigger: React.Dispatch<React.SetStateAction<boolean>>;
+  userLoggedIn: boolean;
+  studyListShowing: boolean;
+  displayList: ResourceProp[];
+  studyList: ResourceProp[];
 }
 
 interface CommentsProps {
@@ -47,23 +51,40 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
     }
   };
 
+  // useEffect(() => {
+  //   try {
+  //     const checkIfInStudyList = async () => {
+  //       if (props.user.user_id !== 0) {
+  //         const studyListData = await axios.get(
+  //           `${baseUrl}/study-list/${props.user.user_id}/${props.resource.resource_id}`
+  //         );
+  //         console.log(studyListData.data)
+  //         if ( studyListData.data.length === 1 ) {
+  //           setAddedToStudyList(true);
+  //         }else{
+  //           setAddedToStudyList(false)
+  //         }
+  //       }
+  //     };
+  //     checkIfInStudyList();
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }, [props.user.user_id, props.studyListTrigger, props.resource.resource_id, props.studyListShowing, props.displayList]);
   useEffect(() => {
-    try {
-      const checkIfInStudyList = async () => {
-        if (props.user.user_id !== 0) {
-          const commentsData = await axios.get(
-            `${baseUrl}/study-list/${props.user.user_id}/${props.resource.resource_id}`
-          );
-          if (typeof commentsData.data !== "string") {
-            setAddedToStudyList(true);
-          }
-        }
-      };
-      checkIfInStudyList();
-    } catch (err) {
-      console.error(err);
-    }
-  }, [props.user.user_id, props.studyListTrigger, props.resource.resource_id]);
+    const checkIfInStudyList =
+      props.studyList.find(
+        (el) => el.resource_id === props.resource.resource_id
+      ) !== undefined;
+    checkIfInStudyList ? setAddedToStudyList(true) : setAddedToStudyList(false);
+  }, [
+    props.user.user_id,
+    props.studyListTrigger,
+    props.resource.resource_id,
+    props.studyListShowing,
+    props.displayList,
+    props.studyList,
+  ]);
 
   const addToStudyList = () => {
     axios.post(`${baseUrl}/studylist`, {
@@ -165,6 +186,7 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
                 type="button"
                 className="btn btn-success"
                 onClick={addLike}
+                disabled={!props.userLoggedIn}
               >
                 Likes{" "}
                 <span className="badge badge-light">
@@ -176,6 +198,7 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
                 type="button"
                 className="btn btn-danger"
                 onClick={addDislike}
+                disabled={!props.userLoggedIn}
               >
                 Dislikes{" "}
                 <span className="badge badge-light">
@@ -189,6 +212,7 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
                 type="button"
                 className="btn btn-warning"
                 onClick={deleteFromStudyList}
+                disabled={!props.userLoggedIn}
               >
                 Remove From Study List{" "}
                 <span className="badge badge-light"></span>
@@ -198,6 +222,7 @@ function ResourceCard(props: ResourceCardProps): JSX.Element {
                 type="button"
                 className="btn btn-primary"
                 onClick={addToStudyList}
+                disabled={!props.userLoggedIn}
               >
                 Add to Study List <span className="badge badge-light"></span>
               </button>
