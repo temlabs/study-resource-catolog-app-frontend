@@ -15,6 +15,7 @@ export default function MainComponent(props: UserProps): JSX.Element {
   const [displayList, setDisplayList] = useState<ResourceProp[]>([]);
   const [likeTrigger, setLikeTrigger] = useState<boolean>(false);
   const [studyListTrigger, setStudyListTrigger] = useState<boolean>(false);
+  const [newPost, setNewPost] = useState<boolean>(true);
 
   const userLoggedIn = props.user_id === 0 ? false : true;
   // fetch the necessary data once only
@@ -53,7 +54,7 @@ export default function MainComponent(props: UserProps): JSX.Element {
     getContentTypes();
     getAllTags();
     getResourceList();
-  }, [props.user_id, likeTrigger]);
+  }, [props.user_id, likeTrigger, newPost]);
 
   // fetch study list whenever user id is changed
   useEffect(() => {
@@ -76,6 +77,9 @@ export default function MainComponent(props: UserProps): JSX.Element {
         user_id={props.user_id}
         user_name={props.user_name}
         tags={allTags}
+        contentTypes={contentTypes}
+        setNewPost={setNewPost}
+        newPost={newPost}
       />
       <FilterBar
         userLoggedIn={userLoggedIn}
@@ -103,6 +107,10 @@ export default function MainComponent(props: UserProps): JSX.Element {
             setLikeTrigger={setLikeTrigger}
             studyListTrigger={studyListTrigger}
             setStudyListTrigger={setStudyListTrigger}
+            userLoggedIn={userLoggedIn}
+            studyListShowing={studyListShowing}
+            displayList={displayList}
+            studyList={studyList}
           />
         </div>
       ))}

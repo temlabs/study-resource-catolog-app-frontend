@@ -15,13 +15,18 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
     recommendation_nature: "",
     recommendation_reason: "",
   });
-
-  useEffect(() => {
-    setResource(Object.assign(resource, { user_id: props.user_id }));
-  }, [props.user_id, resource]);
-
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedNature, setSelectedNature] = useState("");
+  const [selectedContent, setSelectedContent] = useState<string>("");
+
+  useEffect(() => {
+    const source = {
+      user_id: props.user_id,
+      content_name: selectedContent,
+      tags: selectedTags,
+    };
+    setResource(Object.assign(resource, source));
+  }, [props.user_id, resource, selectedContent, selectedTags]);
 
   const handleAddTag = (value: string, listElement: HTMLLIElement) => {
     const tagIndex = selectedTags.findIndex((t) => t === value);
@@ -76,6 +81,24 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
           } else {
             window.alert(error);
           }
+        })
+        .then(() => {
+          setResource({
+            user_id: props.user_id,
+            resource_name: "",
+            author_name: "",
+            url: "",
+            description: "",
+            tags: [],
+            content_name: "",
+            build_stage: "",
+            recommendation_nature: "",
+            recommendation_reason: "",
+          });
+          setSelectedTags([]);
+          setSelectedNature("");
+          setSelectedContent("");
+          props.setNewPost(!props.newPost);
         });
     }
   };
@@ -135,15 +158,35 @@ export default function NewResource(props: NewResourceProps): JSX.Element {
                 disabled={!props.userLoggedIn}
               />
               <br></br>
-              <input
-                className="nr--input"
-                value={resource.content_name}
-                name="content_type"
-                type="text"
-                placeholder="Content Type:"
-                onChange={handleChange}
-                disabled={!props.userLoggedIn}
-              />
+              <div className="dropdown">
+                <button
+                  className="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  disabled={!props.userLoggedIn}
+                >
+                  {selectedContent.length > 0
+                    ? selectedContent
+                    : "choose content type:"}
+                </button>
+                <ul
+                  className="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  {props.contentTypes.map((content, ix) => (
+                    <li
+                      key={ix}
+                      className="dropdown-item"
+                      onClick={() => setSelectedContent(content)}
+                    >
+                      {content}
+                    </li>
+                  ))}
+                </ul>
+              </div>
               <br></br>
               <input
                 className="nr--input"

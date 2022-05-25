@@ -6,6 +6,9 @@ export interface UserProps {
 export interface NewResourceProps extends UserProps {
   tags: string[];
   userLoggedIn: boolean;
+  contentTypes: string[];
+  newPost: boolean;
+  setNewPost: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface ResourceProp {
